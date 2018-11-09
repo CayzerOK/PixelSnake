@@ -1,4 +1,4 @@
-
+package com.cayzerok.render
 import de.matthiasmann.twl.utils.PNGDecoder
 import java.io.IOException
 import org.lwjgl.opengl.GL11
@@ -6,13 +6,14 @@ import org.lwjgl.BufferUtils
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 
+val assets = "./src/main/com/cayzerok/assets/"
+
 object Texturise {
     val id = GL11.glGenTextures()
 
-    fun decodePNG(path:String) {
+    fun decodePNG(asset:String) {
         try {
-            BufferedInputStream(FileInputStream(path)).use { `is` ->
-                //Create the PNGDecoder object and decode the texture to a buffer
+            BufferedInputStream(FileInputStream(assets+asset)).use { `is` ->
                 val decoder = PNGDecoder(`is`)
                 val width = decoder.getWidth()
                 val height = decoder.getHeight()

@@ -1,9 +1,11 @@
+package com.cayzerok.render
+
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15.*
 import java.nio.FloatBuffer
 
-class Model{
+class EntityModel{
     var vID: Int? = null
     var drawCount: Int? = null
     var tID: Int? = null
