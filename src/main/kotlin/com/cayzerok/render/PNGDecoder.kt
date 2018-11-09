@@ -6,9 +6,9 @@ import org.lwjgl.BufferUtils
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 
-val assets = "./src/main/com/cayzerok/assets/"
+val assets = "./src/main/kotlin/com/cayzerok/assets/"
 
-object Texturise {
+class Texture {
     val id = GL11.glGenTextures()
 
     fun decodePNG(asset:String) {
