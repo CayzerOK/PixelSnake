@@ -4,8 +4,7 @@ import org.lwjgl.opengl.GL11.*
 import java.io.File
 import javax.imageio.ImageIO
 
-val background = ImageIO.read(File("./src/resources/pidor.png"))
-val pixelsRaw = background!!.getRGB(0,0, background.width, background.height, null,0, background.width)
+
 
 fun coreStart() {
     if (!glfwInit()) {
@@ -16,11 +15,34 @@ fun coreStart() {
     glfwShowWindow(mainWin)
     glfwMakeContextCurrent(mainWin)
     GL.createCapabilities()
-    Table.texture()
     glEnable(GL_TEXTURE_2D)
+    val bacVertices:FloatArray = floatArrayOf(
+            -1f,1f,0f,
+            1f,1f,0f,
+            1f,-1f,0f,
+
+            1f,-1f,0f,
+            -1f,-1f,0f,
+            -1f,1f,0f)
+    val background:FloatArray = floatArrayOf(
+            0f,0f,
+            1f,0f,
+            1f,1f,
+
+            1f,1f,
+            0f,1f,
+            0f,0f
+    )
+
+    val model = Model()
+    model.setModel(bacVertices,background)
+
+    Texturise.decodePNG("./src/main/resources/pidor3.png")
+
     while (!glfwWindowShouldClose(mainWin)) {
         getInput(mainWin)
         glfwPollEvents()
+        model.renderIt()
         mainLoop()
         glfwSwapBuffers(mainWin)
     }
