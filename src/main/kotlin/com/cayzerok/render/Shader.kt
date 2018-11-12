@@ -6,7 +6,6 @@ import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
 import java.io.*
 import java.nio.FloatBuffer
-
 val projection = Matrix4f().scale(100f)
 
 private var program:Int? = null

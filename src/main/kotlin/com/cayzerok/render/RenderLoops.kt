@@ -1,9 +1,9 @@
 package com.cayzerok.render
 
-import com.cayzerok.objects.backround
+import com.cayzerok.objects.centerDot
 
 fun firstRenderLoop() {
-    backround.renderIt()
+    centerDot.renderIt()
 }
 
 fun secondRenderLoop() {

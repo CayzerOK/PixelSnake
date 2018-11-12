@@ -1,10 +1,8 @@
 package com.cayzerok.render
 
+import com.cayzerok.core.stabileFloat
 import org.joml.Matrix4f
 import org.joml.Vector3f
-import org.lwjgl.vulkan.AMDNegativeViewportHeight
-import java.text.FieldPosition
-
 class Camera {
     private var camPosition: Vector3f? = null
     private var camProjection:Matrix4f? = null
@@ -18,8 +16,8 @@ class Camera {
         camPosition = Vector3f(x,y,z)
     }
 
-    fun addPosition (x:Float,y:Float,z:Float) {
-        camPosition!!.add(Vector3f(x,y,z))
+    fun move (x:Float,y:Float,z:Float) {
+        camPosition!!.add(Vector3f(stabileFloat(x), stabileFloat(y), stabileFloat(z)))
     }
 
     fun getPosition(): Vector3f? {return camPosition}

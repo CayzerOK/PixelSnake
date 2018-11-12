@@ -1,7 +1,8 @@
 package com.cayzerok.core
 
+import com.cayzerok.ui.Statistics
 import org.lwjgl.glfw.GLFW.glfwTerminate
-val winMultiple:Int = 50
+val speedMultiple = 1
 
 fun main(args: Array<String>) {
     try {
@@ -9,4 +10,8 @@ fun main(args: Array<String>) {
     } finally {
         glfwTerminate()
     }
+}
+
+fun stabileFloat(number:Float): Float {
+    return number*Statistics.frameTime*speedMultiple/100
 }

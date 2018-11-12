@@ -1,13 +1,58 @@
 package com.cayzerok.core
 
 import org.lwjgl.glfw.GLFW.*
-import java.awt.event.MouseWheelEvent
 
 fun getInput(window:Long) {
-    if( glfwGetMouseButton(window,0) == 1) {glfwSetWindowShouldClose(window,true)}
-    if( glfwGetKey(window, GLFW_KEY_RIGHT) == 1) {mainCamera.addPosition(10f,0f,0f)}
-    if( glfwGetKey(window, GLFW_KEY_LEFT) == 1) {mainCamera.addPosition(-10f,0f,0f)}
-    if( glfwGetKey(window, GLFW_KEY_UP) == 1)  {mainCamera.addPosition(0f,10f,0f)}
-    if( glfwGetKey(window, GLFW_KEY_DOWN) == 1) {mainCamera.addPosition(0f,-10f,0f)}
-    if( glfwGetKey(window, GLFW_KEY_SPACE) == 1)  {println(mainCamera.getPosition())}
+    if( input.isKeyPressed(GLFW_KEY_ESCAPE)) {glfwSetWindowShouldClose(window,true)}
+    if( input.isKeyDown(GLFW_KEY_RIGHT)) {mainCamera.move(-10f,0f,0f)}
+    if( input.isKeyDown(GLFW_KEY_LEFT)) {mainCamera.move(10f,0f,0f)}
+    if( input.isKeyDown(GLFW_KEY_UP)) {mainCamera.move(0f,-10f,0f)}
+    if( input.isKeyDown(GLFW_KEY_DOWN)) {mainCamera.move(0f,10f,0f)}
+    if( input.isMouseButtonReleased(0)) { red = 0f}
+    if( input.isMouseButtonPressed(0)) { red = 0.5f}
 }
+
+
+
+class Input(val window: Long) {
+
+    var keys = BooleanArray(GLFW_KEY_LAST,{false})
+    var mouse = BooleanArray(GLFW_MOUSE_BUTTON_LAST,{false})
+
+    fun isKeyDown(key:Int) : Boolean {
+        return glfwGetKey(window,key) == 1
+    }
+
+    fun isKeyPressed(key:Int) : Boolean {
+        return (isKeyDown(key) && !keys[key])
+    }
+
+    fun isKeyReleased(key:Int) : Boolean {
+        return (!isKeyDown(key) && keys[key])
+    }
+
+    fun isMouseButtonDown(key:Int) : Boolean {
+        return glfwGetMouseButton(window,key) == 1
+    }
+
+    fun isMouseButtonPressed(key:Int) : Boolean {
+        return (isMouseButtonDown(key) && !mouse[key])
+    }
+
+    fun isMouseButtonReleased(key:Int) : Boolean {
+        return (!isMouseButtonDown(key) && mouse[key])
+    }
+
+    fun update() {
+        keys.forEachIndexed { index,it ->
+            keys[index] = isKeyDown(index)
+        }
+        mouse.forEachIndexed{ index,it ->
+            mouse[index] = isMouseButtonDown(index)
+        }
+        glfwPollEvents()
+    }
+
+}
+
+
