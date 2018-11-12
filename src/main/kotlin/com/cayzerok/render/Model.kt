@@ -2,7 +2,7 @@ package com.cayzerok.render
 
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL15.*
+import org.lwjgl.opengl.GL20.*
 import java.nio.FloatBuffer
 
 class EntityModel{
@@ -35,22 +35,23 @@ class EntityModel{
     }
 
     fun renderIt() {
-        glEnableClientState(GL_VERTEX_ARRAY)
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY)
+        glEnableVertexAttribArray(0)
+        glEnableVertexAttribArray(1)
 
         glBindBuffer(GL_ARRAY_BUFFER, vID!!)
-        glVertexPointer(3, GL_FLOAT, 0, 0)
+        glVertexAttribPointer(0,3, GL11.GL_FLOAT,false,0,0)
 
         glBindBuffer(GL_ARRAY_BUFFER, tID!!)
-        glTexCoordPointer(2, GL11.GL_FLOAT,0,0)
+        glVertexAttribPointer(1,2, GL11.GL_FLOAT,false,0,0)
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iID!!)
         glDrawElements(GL_TRIANGLES, iDrawCount!!, GL_UNSIGNED_INT,0)
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0)
         glBindBuffer(GL_ARRAY_BUFFER, 0)
-        glDisableClientState(GL_VERTEX_ARRAY)
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY)
+
+        glEnableVertexAttribArray(0)
+        glEnableVertexAttribArray(1)
     }
     private fun createBuffer(data:FloatArray):FloatBuffer {
         val buffer = BufferUtils.createFloatBuffer(drawCount!!)

@@ -8,7 +8,7 @@ class Entity() {
     val model = EntityModel()
 
     fun renderIt(){
-        texture.bind()
+        texture.bind(0)
         model.renderIt()
         texture.unbind()
     }

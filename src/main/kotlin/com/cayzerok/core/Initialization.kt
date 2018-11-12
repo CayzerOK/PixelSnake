@@ -1,4 +1,4 @@
-package com.cayzerok.render
+package com.cayzerok.core
 
 import com.cayzerok.objects.*
 

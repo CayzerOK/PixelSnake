@@ -1,10 +1,13 @@
 package com.cayzerok.render
 
+import com.cayzerok.core.mainWindow
+import org.joml.Matrix4f
+import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.IOException
+import java.io.*
+import java.nio.FloatBuffer
+
+val projection = Matrix4f().scale(100f)
 
 private var program:Int? = null
 private var vertexShader:Int? = null
@@ -12,7 +15,6 @@ private var fragmentShader:Int? = null
 class Shader{
     fun init(fileName: String) {
         program = glCreateProgram()
-
         vertexShader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertexShader!!, readFile(fileName+".vs"))
         glCompileShader(vertexShader!!)
@@ -31,6 +33,7 @@ class Shader{
         glAttachShader(program!!, fragmentShader!!)
 
         glBindAttribLocation(program!!,0,"vertices")
+        glBindAttribLocation(program!!,1,"textures")
 
         glLinkProgram(program!!)
         if (glGetProgrami(program!!, GL_LINK_STATUS) != 1) {
@@ -40,6 +43,22 @@ class Shader{
 
         if (glGetProgrami(program!!, GL_VALIDATE_STATUS) != 1) {
             throw Exception(glGetProgramInfoLog(program!!))
+        }
+    }
+
+    fun setUniform(name:String, value:Float) {
+        val location = glGetUniformLocation(program!!, name)
+        if (location != -1) {
+            glUniform1f(location, value)
+        }
+    }
+
+    fun setUniform(name:String, value: Matrix4f) {
+        val location = glGetUniformLocation(program!!, name)
+        val buffer: FloatBuffer = BufferUtils.createFloatBuffer(16)
+        value.get(buffer)
+        if (location != -1) {
+            glUniformMatrix4fv(location,false, buffer)
         }
     }
 
