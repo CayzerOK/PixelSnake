@@ -5,14 +5,14 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20.*
 import java.nio.FloatBuffer
 
-class EntityModel{
+class EntityModel(vertices: FloatArray, texCoords: FloatArray, indices:IntArray){
     var vID: Int? = null
     var drawCount: Int? = null
     var iDrawCount: Int? = null
     var tID: Int? = null
     var iID: Int? = null
 
-    fun setModel(vertices: FloatArray, texCoords: FloatArray, indices:IntArray) {
+    init {
         drawCount = vertices.size
         iDrawCount = indices.size
         vID = glGenBuffers()

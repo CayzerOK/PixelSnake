@@ -10,14 +10,14 @@ import java.io.BufferedInputStream
 
 val assets = "./resources/"
 
-class Texture {
+class Texture(asset:String) {
     val id = GL11.glGenTextures()
     var width:Int = 0
     var height:Int = 0
 
-    fun decodePNG(asset:String) {
+    init {
         try {
-            BufferedInputStream(FileInputStream(assets+asset)).use { `is` ->
+            BufferedInputStream(FileInputStream(assets+asset+".png")).use { `is` ->
                 val decoder = PNGDecoder(`is`)
                 width = decoder.getWidth()
                 height = decoder.getHeight()

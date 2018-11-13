@@ -12,12 +12,11 @@ object mainWindow {
     val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {720}
     val height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {480}
 }
-val mainCamera = Camera()
+val mainCamera = Camera(mainWindow.width,mainWindow.height)
 var input = Input(0)
-val shader = Shader()
 
 var red = 0f
-
+val shader = Shader("shader")
 fun coreStart() {
     if (!glfwInit()) {
         throw Exception("GLFW_INIT_ERROR")
@@ -27,25 +26,19 @@ fun coreStart() {
     val win = glfwCreateWindow(mainWindow.width, mainWindow.height, "Snake Bizzare Adventure", mainWindow.monitor, 0)
     glfwShowWindow(win)
     glfwMakeContextCurrent(win)
-
     input = Input(win)
-
     GL.createCapabilities()
     glEnable(GL_TEXTURE_2D)
-    mainCamera.use(mainWindow.width,mainWindow.height)
-
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     initialize()
-
-    shader.init("shader")
     shader.bind()
 
     while (!glfwWindowShouldClose(win)) {
         Statistics.readFrameRate()
-        glClearColor(red, 0f, 0f, 0f)
+        glClearColor(red+0.8f, 0.8f, 0.6f, 1f)
         glClearDepth(1.0)
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-        shader.setUniform("sampler", 0f)
-        shader.setUniform("projection", mainCamera.getProjection().mul(projection))
         getInput(win)
         input.update()
         mainLoop()

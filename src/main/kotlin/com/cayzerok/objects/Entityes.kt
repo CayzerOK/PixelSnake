@@ -1,11 +1,13 @@
 package com.cayzerok.objects
 
 import com.cayzerok.render.EntityModel
+import com.cayzerok.render.Shader
 import com.cayzerok.render.Texture
+import com.cayzerok.render.projection
 
 object centerDot {
-    val texture = Texture()
-    val model = EntityModel()
+    val texture = Texture("background")
+
     val vertices:FloatArray = floatArrayOf(
             -1f,1f,0f,  //0
             1f,1f,0f,   //1
@@ -22,13 +24,11 @@ object centerDot {
             0,1,2,
             2,3,0
     )
+    val model = EntityModel(vertices, texCoords, indices)
+
     fun renderIt(){
         texture.bind(0)
         model.renderIt()
         texture.unbind()
-    }
-    fun init() {
-        model.setModel(vertices, texCoords, indices)
-        texture.decodePNG("background.png")
     }
 }

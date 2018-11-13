@@ -6,23 +6,25 @@ import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
 import java.io.*
 import java.nio.FloatBuffer
-val projection = Matrix4f().scale(100f)
+var zoom = 50f
+val projection = Matrix4f().scale(zoom)
 
 private var program:Int? = null
 private var vertexShader:Int? = null
 private var fragmentShader:Int? = null
-class Shader{
-    fun init(fileName: String) {
+class Shader(fileName: String){
+    private val shaderName = fileName
+    fun init() {
         program = glCreateProgram()
         vertexShader = glCreateShader(GL_VERTEX_SHADER)
-        glShaderSource(vertexShader!!, readFile(fileName+".vs"))
+        glShaderSource(vertexShader!!, readFile(shaderName+".vs"))
         glCompileShader(vertexShader!!)
         if(glGetShaderi(vertexShader!!, GL_COMPILE_STATUS) != 1) {
             throw Exception(glGetShaderInfoLog(vertexShader!!))
         }
 
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER)
-        glShaderSource(fragmentShader!!, readFile(fileName+".fs"))
+        glShaderSource(fragmentShader!!, readFile(shaderName+".fs"))
         glCompileShader(fragmentShader!!)
         if(glGetShaderi(fragmentShader!!, GL_COMPILE_STATUS) != 1) {
             throw Exception(glGetShaderInfoLog(fragmentShader!!))

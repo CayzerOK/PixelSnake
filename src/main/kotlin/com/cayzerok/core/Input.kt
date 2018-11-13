@@ -1,5 +1,6 @@
 package com.cayzerok.core
 
+import com.cayzerok.render.zoom
 import org.lwjgl.glfw.GLFW.*
 
 fun getInput(window:Long) {
@@ -10,6 +11,8 @@ fun getInput(window:Long) {
     if( input.isKeyDown(GLFW_KEY_DOWN)) {mainCamera.move(0f,10f,0f)}
     if( input.isMouseButtonReleased(0)) { red = 0f}
     if( input.isMouseButtonPressed(0)) { red = 0.5f}
+    if( input.isKeyPressed(GLFW_KEY_SPACE)) { println("SPACE!")}
+    if( input.isKeyReleased(GLFW_KEY_SPACE)) { println("I AM IN SPACE!")}
 }
 
 
