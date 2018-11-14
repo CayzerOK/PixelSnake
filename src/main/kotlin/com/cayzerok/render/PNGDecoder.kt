@@ -42,7 +42,9 @@ class Texture(asset:String) {
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, id)
         }
     }
-    fun unbind() {
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0)
+
+    @Throws(Throwable::class)
+    @Override protected fun finalize() {
+        glDeleteTextures(id)
     }
 }

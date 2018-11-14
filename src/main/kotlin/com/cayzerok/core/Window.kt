@@ -12,8 +12,6 @@ object mainWindow {
     val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {720}
     val height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {480}
 }
-val mainCamera = Camera(mainWindow.width,mainWindow.height)
-var input = Input(0)
 
 var red = 0f
 val shader = Shader("shader")
@@ -37,7 +35,6 @@ fun coreStart() {
     while (!glfwWindowShouldClose(win)) {
         Statistics.readFrameRate()
         glClearColor(red+0.8f, 0.8f, 0.6f, 1f)
-        glClearDepth(1.0)
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         getInput(win)
         input.update()

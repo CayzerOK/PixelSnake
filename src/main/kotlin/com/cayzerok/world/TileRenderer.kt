@@ -44,12 +44,12 @@ class TileRenderer {
         }
     }
 
-    fun renderTile(tile: Tile, x: Float, y: Float, shader: Shader, world: Matrix4f, cam: Camera) {
-        if (x in (-mainCamera.camPosition.x / 100) - 5..(-mainCamera.camPosition.x / 100) + 5)
-            if (y in (-mainCamera.camPosition.y / 100) - 3..(-mainCamera.camPosition.y / 100) + 3) {
+    fun renderTile(tile: Int, x: Float, y: Float, shader: Shader, world: Matrix4f, cam: Camera) {
+        if (x in (-cam.camPosition.x / 100) - 5..(-cam.camPosition.x / 100) + 5)
+            if (y in (-cam.camPosition.y / 100) - 3..(-cam.camPosition.y / 100) + 3) {
 
                 shader.bind()
-                if (tileTextures.containsKey(tile.texture)) tileTextures[tile.texture]!!.bind(0)
+                if (tileTextures.containsKey(tiles[tile]!!.texture)) tileTextures[tiles[tile]!!.texture]!!.bind(0)
 
                 val tilePos = Matrix4f().translate(Vector3f((x * 2), (y * 2), 0f))
                 val target = Matrix4f()

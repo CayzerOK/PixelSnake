@@ -6,8 +6,7 @@ import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
 import java.io.*
 import java.nio.FloatBuffer
-var zoom = 50f
-val projection = Matrix4f().scale(zoom)
+
 
 private var program:Int? = null
 private var vertexShader:Int? = null
@@ -61,6 +60,14 @@ class Shader(fileName: String){
         if (location != -1) {
             glUniformMatrix4fv(location,false, buffer)
         }
+    }
+
+    fun finalize() {
+        glDetachShader(program!!, vertexShader!!)
+        glDetachShader(program!!, fragmentShader!!)
+        glDeleteShader(vertexShader!!)
+        glDeleteShader(fragmentShader!!)
+        glDeleteProgram(program!!)
     }
 
     fun bind() {

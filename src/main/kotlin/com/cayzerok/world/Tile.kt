@@ -15,10 +15,12 @@ class Tile(var id:Int, var texture:String) {
     }
 }
 
-val testTile = Tile(0, "background")
-val stoneTile = Tile(1,"stone")
-val grassTile = Tile(2, "grass")
-val waterTile = Tile(3, "water")
+
+object TileList{
+    val stoneTile = Tile(1,"stone")
+    val grassTile = Tile(2, "grass")
+    val waterTile = Tile(3, "water")
+}
 
 
 

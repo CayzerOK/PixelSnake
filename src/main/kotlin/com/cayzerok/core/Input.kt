@@ -1,18 +1,15 @@
 package com.cayzerok.core
 
-import com.cayzerok.render.zoom
+import com.cayzerok.render.player
+import com.cayzerok.world.World
 import org.lwjgl.glfw.GLFW.*
 
 fun getInput(window:Long) {
     if( input.isKeyPressed(GLFW_KEY_ESCAPE)) {glfwSetWindowShouldClose(window,true)}
-    if( input.isKeyDown(GLFW_KEY_RIGHT)) {mainCamera.move(-10f,0f,0f)}
-    if( input.isKeyDown(GLFW_KEY_LEFT)) {mainCamera.move(10f,0f,0f)}
-    if( input.isKeyDown(GLFW_KEY_UP)) {mainCamera.move(0f,-10f,0f)}
-    if( input.isKeyDown(GLFW_KEY_DOWN)) {mainCamera.move(0f,10f,0f)}
-    if( input.isMouseButtonReleased(0)) { red = 0f}
-    if( input.isMouseButtonPressed(0)) { red = 0.5f}
-    if( input.isKeyPressed(GLFW_KEY_SPACE)) { println("SPACE!")}
-    if( input.isKeyReleased(GLFW_KEY_SPACE)) { println("I AM IN SPACE!")}
+    if( input.isKeyDown(GLFW_KEY_W)) {player.position.add(0f,-1f,0f)}
+    if( input.isKeyDown(GLFW_KEY_A)) {player.position.add(1f,0f,0f)}
+    if( input.isKeyDown(GLFW_KEY_S)) {player.position.add(0f,1f,0f) }
+    if( input.isKeyDown(GLFW_KEY_D)) {player.position.add(-1f,0f,0f)}
 }
 
 

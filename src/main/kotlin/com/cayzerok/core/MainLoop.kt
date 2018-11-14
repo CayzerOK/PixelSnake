@@ -1,5 +1,9 @@
 package com.cayzerok.core
 
+import com.cayzerok.render.player
+import com.cayzerok.world.World
+
 fun mainLoop() {
- camPID.stabileVec3(mainCamera.camTarget)
+ camPID.stabileCam(player.position)
+ World.correctCamera()
 }

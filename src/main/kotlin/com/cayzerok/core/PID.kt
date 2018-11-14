@@ -1,21 +1,11 @@
 package com.cayzerok.core
 
-import com.cayzerok.ui.Statistics
 import org.joml.Vector3f
-import java.lang.Math.*
 
 object camPID {
-    var xP:Float = 0f
-    var yP:Float = 0f
-
-    fun stabileVec3(target: Vector3f) {
-
-        if(mainCamera.camPosition.x<target.x) { xP+stabileFloat(10f)}
-        if(mainCamera.camPosition.x>target.x) { xP-stabileFloat(10f)}
-        if(mainCamera.camPosition.y<target.y) { yP+stabileFloat(10f)}
-        if(mainCamera.camPosition.y>target.y) { yP-stabileFloat(10f)}
-
-        mainCamera.camPosition.add(xP,yP,0f)
-
+    fun stabileCam(target: Vector3f) {
+        val xP= (target.x-mainCamera.camPosition.x)/5
+        val yP= (target.y-mainCamera.camPosition.y)/5
+        mainCamera.camPosition.add(stabileFloat(xP), stabileFloat(yP),0f)
     }
 }
