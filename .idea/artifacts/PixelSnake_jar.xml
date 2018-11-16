@@ -23,6 +23,9 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.0/1c64c692473a70af297651d369debc93efa2e49f/lwjgl-opengl-3.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.0/9ff0ed06de0a1d83dd182f2ead48ac4c90865c44/lwjgl-glfw-3.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-vma/3.2.0/85534b1cb84e771086f28e899e86f3e66485ce18/lwjgl-vma-3.2.0-natives-windows.jar" path-in-jar="/" />
+      <element id="directory" name="resources">
+        <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+      </element>
     </root>
   </artifact>
 </component>

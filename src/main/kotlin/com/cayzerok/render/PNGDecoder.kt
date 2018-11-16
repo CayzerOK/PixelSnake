@@ -8,7 +8,7 @@ import org.lwjgl.BufferUtils
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 
-val assets = "./resources/"
+val assets = "./src/main/resources/textures/"
 
 class Texture(asset:String) {
     val id = GL11.glGenTextures()
