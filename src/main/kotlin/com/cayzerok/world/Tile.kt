@@ -17,6 +17,7 @@ class Tile(var id:Int, var texture:String) {
 
 
 object TileList{
+    val aim = Tile(4, "aim")
     val stoneTile = Tile(1,"stone")
     val grassTile = Tile(2, "grass")
     val waterTile = Tile(3, "water")

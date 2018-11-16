@@ -1,6 +1,7 @@
 package com.cayzerok.world
 
 import com.cayzerok.core.mainCamera
+import com.cayzerok.core.shader
 import com.cayzerok.render.*
 import org.joml.Matrix4f
 import org.joml.Vector3f
@@ -44,18 +45,17 @@ class TileRenderer {
         }
     }
 
-    fun renderTile(tile: Int, x: Float, y: Float, shader: Shader, world: Matrix4f, cam: Camera) {
-        if (x in (-cam.camPosition.x / 100) - 5..(-cam.camPosition.x / 100) + 5)
-            if (y in (-cam.camPosition.y / 100) - 3..(-cam.camPosition.y / 100) + 3) {
-
+    fun renderTile(tile: Int, x: Float, y: Float, size:Float = 1f) {
+        if (x in (-mainCamera.camPosition.x / 100) - 5..(-mainCamera.camPosition.x / 100) + 5)
+            if (y in (-mainCamera.camPosition.y / 100) - 3..(-mainCamera.camPosition.y / 100) + 3) {
                 shader.bind()
                 if (tileTextures.containsKey(tiles[tile]!!.texture)) tileTextures[tiles[tile]!!.texture]!!.bind(0)
 
                 val tilePos = Matrix4f().translate(Vector3f((x * 2), (y * 2), 0f))
                 val target = Matrix4f()
 
-                cam.getProjection().mul(world, target)
-                target.mul(tilePos)
+                mainCamera.getProjection().mul(World.projection, target)
+                target.mul(tilePos).scale(size)
 
                 shader.setUniform("sampler", 0f)
                 shader.setUniform("projection", target)

@@ -1,5 +1,9 @@
 package com.cayzerok.ui
 
+import com.cayzerok.core.aimVec
+import com.cayzerok.world.World
+import java.lang.Math.*
+
 object Statistics {
     var lastFrame: Float = 0.0f
     var thisFrame: Float = 0.0f
@@ -20,6 +24,7 @@ object Statistics {
             frames = 0
             println("FPS: $frameRate")
             println("FrameTime: $frameTime")
+            println(sqrt(pow(aimVec.x.toDouble(),2.0)+pow(-aimVec.y.toDouble(),2.0)+pow(aimVec.z.toDouble(),2.0)))
         }
     }
 }

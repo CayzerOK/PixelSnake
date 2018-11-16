@@ -1,10 +1,13 @@
 package com.cayzerok.render
 
+import org.joml.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20.*
 import java.nio.FloatBuffer
+
+
 
 class EntityModel(vertices: FloatArray, texCoords: FloatArray, indices:IntArray){
     var vID: Int? = null

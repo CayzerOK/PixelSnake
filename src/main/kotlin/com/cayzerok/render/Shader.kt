@@ -1,6 +1,5 @@
 package com.cayzerok.render
 
-import com.cayzerok.core.mainWindow
 import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
@@ -16,14 +15,14 @@ class Shader(fileName: String){
     fun init() {
         program = glCreateProgram()
         vertexShader = glCreateShader(GL_VERTEX_SHADER)
-        glShaderSource(vertexShader!!, readFile(shaderName+".vs"))
+        glShaderSource(vertexShader!!, readFile(shaderName+"VS.glsl"))
         glCompileShader(vertexShader!!)
         if(glGetShaderi(vertexShader!!, GL_COMPILE_STATUS) != 1) {
             throw Exception(glGetShaderInfoLog(vertexShader!!))
         }
 
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER)
-        glShaderSource(fragmentShader!!, readFile(shaderName+".fs"))
+        glShaderSource(fragmentShader!!, readFile(shaderName+"FS.glsl"))
         glCompileShader(fragmentShader!!)
         if(glGetShaderi(fragmentShader!!, GL_COMPILE_STATUS) != 1) {
             throw Exception(glGetShaderInfoLog(fragmentShader!!))

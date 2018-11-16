@@ -2,10 +2,9 @@ package com.cayzerok.entity
 
 import com.cayzerok.core.*
 import com.cayzerok.render.*
-import com.cayzerok.world.worldProj
+import com.cayzerok.world.*
 import org.joml.Vector3f
-import com.cayzerok.world.World
-
+import org.joml.Matrix4f
 
 
 class Player() {
@@ -26,19 +25,24 @@ class Player() {
             0, 1, 2,
             2, 3, 0)
     val playerModel = EntityModel(vertices,texture,indices)
-    var position = Vector3f(0f,0f,0f)
+    var position = Vector3f(1f,1f,1f)
+    private val transform = Transform()
 
-    fun update(delta:Float, world:World) {
-
+    fun move(x:Float,y:Float,z:Float) {
+        position.add(stabileFloat(x), stabileFloat(y), stabileFloat(z))
     }
 
     fun renderIt() {
-        val target = mainCamera.getProjection()
-        target.mul(worldProj)
 
-        shader.bind()
+        val playerPos = Matrix4f().translate(Vector3f(-position.x/World.scale, -position.y/World.scale, 0f))
+        val target = Matrix4f()
+
+        mainCamera.getProjection().mul(World.projection, target)
+        target.mul(playerPos).scale(1f)
+
         shader.setUniform("sampler", 0f)
-        shader.setUniform("projection", worldProj)
+        shader.setUniform("projection",transform.getProjection(target))
+
         playerTex.bind(0)
         playerModel.renderIt()
     }
