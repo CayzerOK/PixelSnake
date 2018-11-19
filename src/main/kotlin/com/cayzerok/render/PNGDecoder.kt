@@ -8,7 +8,7 @@ import org.lwjgl.BufferUtils
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 
-val assets = "./src/main/resources/textures/"
+val assets = "./src/main/resources/"
 
 class Texture(asset:String) {
     val id = GL11.glGenTextures()
@@ -17,7 +17,7 @@ class Texture(asset:String) {
 
     init {
         try {
-            BufferedInputStream(FileInputStream(assets+asset+".png")).use { `is` ->
+            BufferedInputStream(FileInputStream(assets+"textures/"+asset+".png")).use { `is` ->
                 val decoder = PNGDecoder(`is`)
                 width = decoder.getWidth()
                 height = decoder.getHeight()

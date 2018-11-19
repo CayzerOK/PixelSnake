@@ -2,7 +2,7 @@ package com.cayzerok.core
 
 import com.cayzerok.ui.*
 import com.cayzerok.render.*
-import com.cayzerok.world.World
+import com.cayzerok.world.*
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
@@ -46,9 +46,8 @@ fun coreStart() {
         firstRenderLoop()
         secondRenderLoop()
         thirdRenderLoop()
-
-
-
         glfwSwapBuffers(window)
     }
+    Land1.saveWorld()
+    Land2.saveWorld()
 }

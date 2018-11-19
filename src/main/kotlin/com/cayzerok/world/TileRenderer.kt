@@ -45,7 +45,7 @@ class TileRenderer {
         }
     }
 
-    fun renderTile(tile: Int, x: Float, y: Float, size:Float = 1f) {
+    fun renderTile(tile: Int, x: Float, y: Float, size:Float = 1f, angle:Double = 0.0) {
         if (x in (-mainCamera.camPosition.x / 100) - 5..(-mainCamera.camPosition.x / 100) + 5)
             if (y in (-mainCamera.camPosition.y / 100) - 3..(-mainCamera.camPosition.y / 100) + 3) {
                 shader.bind()
@@ -55,7 +55,7 @@ class TileRenderer {
                 val target = Matrix4f()
 
                 mainCamera.getProjection().mul(World.projection, target)
-                target.mul(tilePos).scale(size)
+                target.mul(tilePos).scale(size).rotate(Math.toRadians(angle).toFloat(),0f,0f,1f)
 
                 shader.setUniform("sampler", 0f)
                 shader.setUniform("projection", target)

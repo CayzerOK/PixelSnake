@@ -8,33 +8,27 @@ import org.lwjgl.opengl.GL11
 
 val render = TileRenderer()
 val player = Player()
+
 fun firstRenderLoop() {
-    for (y in 0 until World.height)
-        for (x in 0 until World.width)
-            render.renderTile(TileList.grassTile.id,x.toFloat(),-y.toFloat())
+    for (y in 0 until World.height) {
+        for (x in 0 until World.width) {
+            render.renderTile(TileList.waterTile.id, x.toFloat(), -y.toFloat())
+        }
+    }
+    Land1.renderIt()
+    Land2.renderIt()
+
 }
 
 fun secondRenderLoop() {
-    World.renderIt()
-
     player.renderIt()
-
-
-
     render.renderTile(TileList.aim.id,
             cursorPos.x/100,
             cursorPos.y/100, 0.3f)
-
-//    render.renderTile(TileList.stoneTile.id,
-//            -player.position.x/2/World.scale-aimVec.x*2+1,
-//            player.position.y/2/World.scale-aimVec.y,
-//            0.4f)
 }
 
 fun thirdRenderLoop() {
-    GL11.glBegin(GL11.GL_LINES)
-    GL11.glVertex2f(0f,0f)
-    GL11.glVertex2f(aimVec.x, aimVec.y)
-
-    GL11.glEnd()
+    render.renderTile(player.invTile,
+            cursorPos.x/100+0.2f,
+            cursorPos.y/100+0.2f, 0.3f, player.invTileAngle)
 }

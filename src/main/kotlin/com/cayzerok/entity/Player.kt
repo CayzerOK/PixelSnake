@@ -7,7 +7,9 @@ import org.joml.Vector3f
 import org.joml.Matrix4f
 
 
-class Player() {
+class Player {
+    var invTile = 1
+    var invTileAngle = 0.0
     val playerTex = Texture("player")
     val vertices = floatArrayOf(
             -1f, 1f, 0f, // TOP LEFT 0
