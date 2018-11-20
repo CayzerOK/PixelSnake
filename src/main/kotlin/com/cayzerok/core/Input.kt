@@ -64,12 +64,9 @@ fun getInput(window:Long) {
         input.isKeyPressed(GLFW_KEY_DOWN) -> if (layer - 1 in 0..layerList.lastIndex) layer -=1
     }
 
-
-
-
-    if (input.isMouseButtonPressed(0)) {
+    if (input.isMouseButtonDown(0)) {
         layerList[layer].setTile(player.invTile, (cursorPos.x/100+0.5).toInt(),(-cursorPos.y/100+0.5).toInt(),player.invTileAngle)}
-    if (input.isMouseButtonPressed(1)) {layerList[layer].setTile(null, (cursorPos.x/100+0.5).toInt(),(-cursorPos.y/100+0.5).toInt())}
+    if (input.isMouseButtonDown(1)) {layerList[layer].setTile(null, (cursorPos.x/100+0.5).toInt(),(-cursorPos.y/100+0.5).toInt())}
     if (input.scroll != 0.0) {
         if (tiles[player.invTile+input.scroll.toInt()] != null)
             player.invTile += input.scroll.toInt()

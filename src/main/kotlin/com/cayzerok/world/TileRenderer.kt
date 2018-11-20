@@ -48,7 +48,6 @@ class TileRenderer {
     fun renderTile(tile: Int, x: Float, y: Float, size:Float = 1f, angle:Double = 0.0) {
         if (x in (-mainCamera.camPosition.x / 100) - 5..(-mainCamera.camPosition.x / 100) + 5)
             if (y in (-mainCamera.camPosition.y / 100) - 3..(-mainCamera.camPosition.y / 100) + 3) {
-                shader.bind()
                 if (tileTextures.containsKey(tiles[tile]!!.texture)) tileTextures[tiles[tile]!!.texture]!!.bind(0)
 
                 val tilePos = Matrix4f().translate(Vector3f((x * 2), (y * 2), 0f))

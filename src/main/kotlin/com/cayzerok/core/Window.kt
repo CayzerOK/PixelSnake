@@ -6,6 +6,7 @@ import com.cayzerok.world.*
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
+import java.io.FileNotFoundException
 
 object mainWindow {
     var isFullSchreen = false
@@ -21,7 +22,6 @@ fun coreStart() {
     if (!glfwInit()) {
         throw Exception("GLFW_INIT_ERROR")
     }
-
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
     window = glfwCreateWindow(mainWindow.width, mainWindow.height, "Snake Bizzare Adventure", mainWindow.monitor, 0)
     glfwShowWindow(window)
@@ -34,7 +34,11 @@ fun coreStart() {
     glDisable(GL_DEPTH_TEST)
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
     initialize()
+    Land1.setTile(TileList.grass0.id,0,0)
     shader.bind()
+    try {
+        player.load()
+    }catch (e:FileNotFoundException) {}
 
     while (!glfwWindowShouldClose(window)) {
         Statistics.readFrameRate()
@@ -48,6 +52,7 @@ fun coreStart() {
         thirdRenderLoop()
         glfwSwapBuffers(window)
     }
+    player.save()
     Land1.saveWorld()
     Land2.saveWorld()
 }

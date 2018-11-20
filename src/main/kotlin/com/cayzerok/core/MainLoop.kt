@@ -14,4 +14,5 @@ fun mainLoop() {
     val camTarget = Vector3f(-(cursorPos.x-player.position.x)/2, -(cursorPos.y-player.position.y)/2,0f)
     PID.smoothCam(camTarget)
     World.correctCamera()
+    player.collideWithTiles()
 }
