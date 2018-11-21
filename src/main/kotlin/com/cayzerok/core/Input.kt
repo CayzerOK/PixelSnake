@@ -2,15 +2,12 @@ package com.cayzerok.core
 
 import com.cayzerok.render.player
 import com.cayzerok.render.playerAngle
-import com.cayzerok.world.TileList
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import com.cayzerok.world.tiles
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFWScrollCallback
-import org.lwjgl.glfw.GLFWScrollCallbackI
-import java.awt.SystemColor.window
 import org.lwjgl.glfw.GLFW.glfwSetScrollCallback
 
 
@@ -27,6 +24,8 @@ fun getInput(window:Long) {
     cursorPos.x = (xBuffer.get(0).toFloat()-mainCamera.camPosition.x-mainWindow.width/2)
     cursorPos.y = (-yBuffer.get(0).toFloat()-mainCamera.camPosition.y+mainWindow.height/2)
 
+    if (input.isKeyDown(GLFW_KEY_LEFT_CONTROL)&&input.isKeyPressed(GLFW_KEY_R))
+        showWays = !showWays
 
     if( input.isKeyPressed(GLFW_KEY_E)) {
         if (player.invTileAngle == 0.0) {
@@ -58,19 +57,30 @@ fun getInput(window:Long) {
         input.isKeyDown(GLFW_KEY_S)&& input.isKeyDown(GLFW_KEY_D) -> playerAngle = Math.toRadians(225.0).toFloat()
         input.isKeyDown(GLFW_KEY_D)&& input.isKeyDown(GLFW_KEY_W) -> playerAngle = Math.toRadians(315.0).toFloat()
     }
+    if (!showWays) {
+        when {
+            input.isKeyPressed(GLFW_KEY_UP) -> if (layer + 1 in 0..layerList.lastIndex) layer += 1
+            input.isKeyPressed(GLFW_KEY_DOWN) -> if (layer - 1 in 0..layerList.lastIndex) layer -= 1
+        }
 
-    when {
-        input.isKeyPressed(GLFW_KEY_UP) -> if (layer + 1 in 0..layerList.lastIndex) layer +=1
-        input.isKeyPressed(GLFW_KEY_DOWN) -> if (layer - 1 in 0..layerList.lastIndex) layer -=1
-    }
-
-    if (input.isMouseButtonDown(0)) {
-        layerList[layer].setTile(player.invTile, (cursorPos.x/100+0.5).toInt(),(-cursorPos.y/100+0.5).toInt(),player.invTileAngle)}
-    if (input.isMouseButtonDown(1)) {layerList[layer].setTile(null, (cursorPos.x/100+0.5).toInt(),(-cursorPos.y/100+0.5).toInt())}
-    if (input.scroll != 0.0) {
-        if (tiles[player.invTile+input.scroll.toInt()] != null)
-            player.invTile += input.scroll.toInt()
-        input.scroll = 0.0
+        if (input.isMouseButtonDown(0)) {
+            layerList[layer].setTile(player.invTile, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt(), player.invTileAngle)
+        }
+        if (input.isMouseButtonDown(1)) {
+            layerList[layer].setTile(null, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt())
+        }
+        if (input.scroll != 0.0) {
+            if (tiles[player.invTile + input.scroll.toInt()] != null)
+                player.invTile += input.scroll.toInt()
+            input.scroll = 0.0
+        }
+    } else {
+        if (input.isMouseButtonDown(0)) {
+            World.setWays(true,(cursorPos.x / (World.scale*2) + 0.5).toInt(),(-cursorPos.y / (World.scale*2) + 0.5).toInt())
+        }
+        if (input.isMouseButtonDown(1)) {
+            World.setWays(false,(cursorPos.x / (World.scale*2) + 0.5).toInt(),(-cursorPos.y / (World.scale*2) + 0.5).toInt())
+        }
     }
 }
 

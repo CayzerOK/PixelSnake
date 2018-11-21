@@ -11,8 +11,8 @@ import java.io.FileNotFoundException
 object mainWindow {
     var isFullSchreen = false
     val monitor:Long = if (isFullSchreen) {glfwGetPrimaryMonitor()} else {0}
-    val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {720}
-    val height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {480}
+    val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {1280}
+    val height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {720}
 }
 
 var red = 0f
@@ -33,12 +33,10 @@ fun coreStart() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glDisable(GL_DEPTH_TEST)
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
-    initialize()
+
     Land1.setTile(TileList.grass0.id,0,0)
+    initialize()
     shader.bind()
-    try {
-        player.load()
-    }catch (e:FileNotFoundException) {}
 
     while (!glfwWindowShouldClose(window)) {
         Statistics.readFrameRate()
@@ -52,6 +50,7 @@ fun coreStart() {
         thirdRenderLoop()
         glfwSwapBuffers(window)
     }
+    World.saveWays()
     player.save()
     Land1.saveWorld()
     Land2.saveWorld()

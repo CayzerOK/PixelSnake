@@ -2,7 +2,7 @@ package com.cayzerok.world
 
 import java.lang.IllegalStateException
 
-val tiles = Array<Tile?>(16, {null})
+val tiles = Array<Tile?>(255, {null})
 
 class Tile(var id:Int, var texture:String, val solid:Boolean = false) {
     init {
@@ -30,6 +30,7 @@ object TileList{
     val sand3 = Tile(12, "sand3")
     val waterTile = Tile(13, "water")
     val aim = Tile(14, "aim")
+    val waypoint = Tile(15,"waypoint")
 }
 
 

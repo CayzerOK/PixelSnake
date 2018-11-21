@@ -1,6 +1,7 @@
 package com.cayzerok.core
 
 import com.cayzerok.ui.Statistics
+import com.cayzerok.world.World
 import org.lwjgl.glfw.GLFW.glfwTerminate
 val speedMultiple = 1
 

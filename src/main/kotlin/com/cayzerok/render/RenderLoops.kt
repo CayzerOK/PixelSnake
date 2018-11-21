@@ -2,9 +2,7 @@ package com.cayzerok.render
 
 import com.cayzerok.core.*
 import com.cayzerok.entity.Player
-import com.cayzerok.ui.Statistics
 import com.cayzerok.world.*
-import org.lwjgl.opengl.GL11
 
 val render = TileRenderer()
 val player = Player()
@@ -17,18 +15,32 @@ fun firstRenderLoop() {
     }
     Land1.renderIt()
     Land2.renderIt()
+    if(showWays) {
+        for (y in 0 until World.height) {
+            for (x in 0 until World.width) {
+                if (World.wayMap[x+y*World.width]!!)
+                    render.renderTile(TileList.waypoint.id, x.toFloat(), -y.toFloat())
+            }
+        }
+    }
 
 }
 
 fun secondRenderLoop() {
+    //render.renderTile(TileList.aim.id,-player.position.x/World.scale/2, -player.position.y/World.scale/2)
     player.renderIt()
     render.renderTile(TileList.aim.id,
-            cursorPos.x/100,
-            cursorPos.y/100, 0.3f)
+            cursorPos.x/(World.scale*2),
+            cursorPos.y/(World.scale*2), 0.3f)
 }
 
 fun thirdRenderLoop() {
     render.renderTile(player.invTile,
-            cursorPos.x/100+0.2f,
-            cursorPos.y/100+0.2f, 0.3f, player.invTileAngle)
+            cursorPos.x/(World.scale*2)+0.2f,
+            cursorPos.y/(World.scale*2)+0.2f, 0.3f, player.invTileAngle)
+    //render.renderTile(TileList.aim.id, -player.position.x, -player.position.y,0f)
+
+
+
+
 }

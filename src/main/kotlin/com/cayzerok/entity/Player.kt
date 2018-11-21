@@ -5,12 +5,8 @@ import com.cayzerok.render.*
 import com.cayzerok.world.*
 import org.joml.Vector3f
 import org.joml.Matrix4f
-import org.joml.Vector2f
 import java.io.File
-import com.cayzerok.collision.AABB
 import com.cayzerok.world.World
-
-
 
 
 class Player {
@@ -33,25 +29,17 @@ class Player {
             0, 1, 2,
             2, 3, 0)
     val playerModel = EntityModel(vertices,texture,indices)
-    var position = Vector3f(0f,0f,0f)
+    var position = Vector3f(-100f,100f,0f)
     private val transform = Transform()
-    val bBox = AABB(Vector2f(position.x, position.y), Vector2f(1f,1f))
-
-    fun collideWithTiles() {
-
-        val boxes = arrayOfNulls<Vector2f>(25)
-        for (i in 0..4) {
-            for (j in 0..4) {
-                boxes[i + j * 5] = World.getTileBB((position.x/200+0.5f-5/2)+i, (-position.y/200+0.5f-5/2)+j)
-            }
-        }
-    }
-
-
 
 
     fun move(x:Float,y:Float,z:Float) {
         position.add(stabileFloat(x), stabileFloat(y), stabileFloat(z))
+        try {
+            if (World.getWay((-position.x/World.scale/2+0.5f).toInt(),(position.y/World.scale/2+0.5f).toInt())!!)
+                position.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(z))
+        }catch (e:Throwable) {}
+
     }
 
     fun save() {
