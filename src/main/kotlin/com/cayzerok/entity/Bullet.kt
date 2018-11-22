@@ -30,10 +30,6 @@ class Bullet(val position: Vector3f, val angle:Matrix4f){
             2, 3, 0)
     val model = EntityModel(vertices,texture,indices)
 
-    init {
-        runBlocking { println(channel.receive()) }
-    }
-
     fun move(x:Float,y:Float,z:Float) {
         position.add(stabileFloat(x), stabileFloat(y), stabileFloat(z))
         try {
@@ -54,8 +50,11 @@ class Bullet(val position: Vector3f, val angle:Matrix4f){
     }
 }
 
-fun shoot(position: Vector3f, angle:Matrix4f) {
-    runBlocking {
-        val bullet = launch{ Bullet(position,angle) }
+
+fun main() = runBlocking {
+    launch {
+        delay(1000L)
+        println("World!")
     }
+    println("Hello,")
 }
