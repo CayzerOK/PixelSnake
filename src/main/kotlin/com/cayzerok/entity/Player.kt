@@ -44,10 +44,10 @@ class Player {
 
     fun save() {
         val posString = gson.toJson(position)
-        File(assets+"levels/player.lvl").writeText(posString)
+        File(path+"levels/player.lvl").writeText(posString)
     }
     fun load() {
-        position.set(gson.fromJson(File(assets+"levels/player.lvl").readText(),Vector3f::class.java))
+        position.set(gson.fromJson(File(path+"levels/player.lvl").readText(),Vector3f::class.java))
     }
 
     fun renderIt() {

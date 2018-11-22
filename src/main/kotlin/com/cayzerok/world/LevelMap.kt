@@ -22,7 +22,7 @@ object World{
 
     fun loadWays() {
         try {
-            wayMap = gson.fromJson(File(assets + "levels/wayMap.lvl").readText(), Array<Boolean?>::class.java)
+            wayMap = gson.fromJson(File(path + "levels/wayMap.lvl").readText(), Array<Boolean?>::class.java)
         }catch (e:FileNotFoundException) {}
     }
     fun setWays(way:Boolean, x: Int, y: Int) {
@@ -35,7 +35,7 @@ object World{
 
     fun saveWays() {
         val wayMapString = gson.toJson(wayMap)
-        File(assets+"levels/wayMap.lvl").writeText(wayMapString)
+        File(path+"levels/wayMap.lvl").writeText(wayMapString)
     }
 
     fun correctCamera() {
@@ -94,15 +94,15 @@ class Layer(val name:String){
 
     fun loadWorld() {
         try {
-            sheet = gson.fromJson(File(assets + "levels/" + name + ".lvl").readText(), Array<Int?>::class.java)
-            angleSheet = gson.fromJson(File(assets+"levels/"+name+".ang").readText(),Array<Double?>::class.java)
+            sheet = gson.fromJson(File(path + "levels/" + name + ".lvl").readText(), Array<Int?>::class.java)
+            angleSheet = gson.fromJson(File(path+"levels/"+name+".ang").readText(),Array<Double?>::class.java)
         } catch (e:FileNotFoundException){}
 
     }
     fun saveWorld() {
         val lvlString = gson.toJson(sheet)
         val angleString = gson.toJson(angleSheet)
-        File(assets+"levels/"+name+".lvl").writeText(lvlString)
-        File(assets+"levels/"+name+".ang").writeText(angleString)
+        File(path+"levels/"+name+".lvl").writeText(lvlString)
+        File(path+"levels/"+name+".ang").writeText(angleString)
     }
 }

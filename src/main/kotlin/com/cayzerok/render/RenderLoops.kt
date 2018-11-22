@@ -27,7 +27,6 @@ fun firstRenderLoop() {
 }
 
 fun secondRenderLoop() {
-    //render.renderTile(TileList.aim.id,-player.position.x/World.scale/2, -player.position.y/World.scale/2)
     player.renderIt()
     render.renderTile(TileList.aim.id,
             cursorPos.x/(World.scale*2),
@@ -38,7 +37,6 @@ fun thirdRenderLoop() {
     render.renderTile(player.invTile,
             cursorPos.x/(World.scale*2)+0.2f,
             cursorPos.y/(World.scale*2)+0.2f, 0.3f, player.invTileAngle)
-    //render.renderTile(TileList.aim.id, -player.position.x, -player.position.y,0f)
 
 
 

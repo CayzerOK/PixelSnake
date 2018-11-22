@@ -1,11 +1,14 @@
 package com.cayzerok.core
 
+import com.cayzerok.render.Transform
 import com.cayzerok.ui.Statistics
 import com.cayzerok.world.World
+import kotlinx.coroutines.runBlocking
 import org.lwjgl.glfw.GLFW.glfwTerminate
 val speedMultiple = 1
-
-fun main(args: Array<String>) {
+var path = Transform()::class.java.protectionDomain.codeSource.location.path.dropLast(14)
+fun main(args: Array<String>){
+    println(path)
     try {
         coreStart()
     } finally {

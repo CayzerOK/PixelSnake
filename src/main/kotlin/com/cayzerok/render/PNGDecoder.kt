@@ -1,5 +1,6 @@
 package com.cayzerok.render
 
+import com.cayzerok.core.path
 import org.lwjgl.opengl.GL13.*
 import de.matthiasmann.twl.utils.PNGDecoder
 import java.io.IOException
@@ -8,8 +9,6 @@ import org.lwjgl.BufferUtils
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 
-val assets = "./src/main/resources/"
-
 class Texture(asset:String) {
     val id = GL11.glGenTextures()
     var width:Int = 0
@@ -17,7 +16,7 @@ class Texture(asset:String) {
 
     init {
         try {
-            BufferedInputStream(FileInputStream(assets+"textures/"+asset+".png")).use { `is` ->
+            BufferedInputStream(FileInputStream(path+"textures/"+asset+".png")).use { `is` ->
                 val decoder = PNGDecoder(`is`)
                 width = decoder.getWidth()
                 height = decoder.getHeight()

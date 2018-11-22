@@ -21,8 +21,31 @@ private var layer:Int = 0
 fun getInput(window:Long) {
 
     glfwGetCursorPos(input.window, xBuffer, yBuffer)
-    cursorPos.x = (xBuffer.get(0).toFloat()-mainCamera.camPosition.x-mainWindow.width/2)
-    cursorPos.y = (-yBuffer.get(0).toFloat()-mainCamera.camPosition.y+mainWindow.height/2)
+
+    var cx = xBuffer.get(0).toFloat()
+    var cy = -yBuffer.get(0).toFloat()
+
+    if (cx < World.scale/2) {
+        cx = World.scale/2
+        glfwSetCursorPos(window, cx.toDouble(), -cy.toDouble())
+    }
+
+    if (cx > mainWindow.width-World.scale/2){
+        cx = mainWindow.width-World.scale/2
+        glfwSetCursorPos(window, cx.toDouble(), -cy.toDouble())
+    }
+
+    if (-cy < World.scale/2) {
+        cy = -World.scale/2
+        glfwSetCursorPos(window, cx.toDouble(), -cy.toDouble())
+    }
+    if (-cy > mainWindow.height-World.scale/2) {
+        cy = -mainWindow.height+World.scale/2
+        glfwSetCursorPos(window, cx.toDouble(), -cy.toDouble())
+    }
+
+    cursorPos.x = (cx-mainCamera.camPosition.x-mainWindow.width/2)
+    cursorPos.y = (cy-mainCamera.camPosition.y+mainWindow.height/2)
 
     if (input.isKeyDown(GLFW_KEY_LEFT_CONTROL)&&input.isKeyPressed(GLFW_KEY_R))
         showWays = !showWays
@@ -57,6 +80,7 @@ fun getInput(window:Long) {
         input.isKeyDown(GLFW_KEY_S)&& input.isKeyDown(GLFW_KEY_D) -> playerAngle = Math.toRadians(225.0).toFloat()
         input.isKeyDown(GLFW_KEY_D)&& input.isKeyDown(GLFW_KEY_W) -> playerAngle = Math.toRadians(315.0).toFloat()
     }
+
     if (!showWays) {
         when {
             input.isKeyPressed(GLFW_KEY_UP) -> if (layer + 1 in 0..layerList.lastIndex) layer += 1
@@ -122,10 +146,10 @@ class Input(val window: Long) {
     }
 
     fun update() {
-        keys.forEachIndexed { index,it ->
+        keys.forEachIndexed { index,_ ->
             keys[index] = isKeyDown(index)
         }
-        mouse.forEachIndexed{ index,it ->
+        mouse.forEachIndexed{ index,_ ->
             mouse[index] = isMouseButtonDown(index)
         }
         glfwPollEvents()

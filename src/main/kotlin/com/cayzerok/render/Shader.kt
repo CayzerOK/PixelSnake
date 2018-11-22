@@ -1,5 +1,6 @@
 package com.cayzerok.render
 
+import com.cayzerok.core.path
 import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
@@ -76,7 +77,7 @@ class Shader(fileName: String){
     private fun readFile(fileName:String) :String {
         val stringBuilder = StringBuilder()
         try {
-            val bufferReader:BufferedReader = BufferedReader(FileReader(File("./src/main/resources/shaders/"+fileName)))
+            val bufferReader:BufferedReader = BufferedReader(FileReader(File(path+"shaders/"+fileName)))
             var hasLine:Boolean = true
             var line:String?
             while (hasLine){
