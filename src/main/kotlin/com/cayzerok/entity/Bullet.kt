@@ -36,17 +36,17 @@ object Bullet{
     val model = EntityModel(vertices,texture,indices)
 
 
-    fun renderIt(target:Vector3f, angle: Float, index:Int) {
+    fun renderIt(bullet:Vector3f, angle: Float, index:Int) {
         val y = 100*sin(angle)
         val x = 100*cos(angle)
 
-        target.add(stabileFloat(x), stabileFloat(y), stabileFloat(0f))
+        bullet.add(stabileFloat(x), stabileFloat(y), stabileFloat(0f))
         try {
-            if (World.getWay((-target.x/ World.scale/2+0.5f).toInt(),(target.y/ World.scale/2+0.5f).toInt())!!)
-                target.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(0f))
+            if (World.getWay((-bullet.x/ World.scale/2+0.5f).toInt(),(bullet.y/ World.scale/2+0.5f).toInt())!!)
+                bullet.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(0f))
         } catch (e:Throwable) {}
 
-        val bulletPos = Matrix4f().translate(Vector3f(-target.x/ World.scale, -target.y/ World.scale, 0f))
+        val bulletPos = Matrix4f().translate(Vector3f(-bullet.x/ World.scale, -bullet.y/ World.scale, 0f))
         val target = Matrix4f()
         mainCamera.getProjection().mul(World.projection, target)
         target.mul(bulletPos).scale(1f)
