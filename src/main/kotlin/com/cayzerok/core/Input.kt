@@ -5,6 +5,7 @@ import com.cayzerok.render.playerAngle
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import com.cayzerok.world.tiles
+import kotlinx.coroutines.channels.Channel
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFWScrollCallback
@@ -15,7 +16,7 @@ import org.lwjgl.glfw.GLFW.glfwSetScrollCallback
 
 val xBuffer = BufferUtils.createDoubleBuffer(1)
 val yBuffer = BufferUtils.createDoubleBuffer(1)
-
+val shoot = Channel<Boolean>()
 private var layer:Int = 0
 
 fun getInput(window:Long) {
@@ -81,6 +82,8 @@ fun getInput(window:Long) {
         input.isKeyDown(GLFW_KEY_D)&& input.isKeyDown(GLFW_KEY_W) -> playerAngle = Math.toRadians(315.0).toFloat()
     }
 
+
+
     if (!showWays) {
         when {
             input.isKeyPressed(GLFW_KEY_UP) -> if (layer + 1 in 0..layerList.lastIndex) layer += 1
@@ -116,7 +119,7 @@ class Input(val window: Long) {
 
     fun updateScroll() {
 
-        glfwSetScrollCallback(window, GLFWScrollCallback.create { window, xoffset, yoffset ->
+        glfwSetScrollCallback(window, GLFWScrollCallback.create { _, _, yoffset ->
             scroll = yoffset
         })
     }

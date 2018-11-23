@@ -3,14 +3,12 @@ package com.cayzerok.core
 import com.cayzerok.ui.*
 import com.cayzerok.render.*
 import com.cayzerok.world.*
-import kotlinx.coroutines.*
-import org.joml.Matrix4f
-import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 
 object mainWindow {
+    var window:Long = 0
     var isFullSchreen = false
     val monitor:Long = if (isFullSchreen) {glfwGetPrimaryMonitor()} else {0}
     val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {1280}
@@ -19,41 +17,39 @@ object mainWindow {
 
 var red = 0f
 val shader = Shader("shader")
-var window:Long = 0
+
 fun coreStart() {
-    GlobalScope.run{
-        if (!glfwInit()) {
-            throw Exception("GLFW_INIT_ERROR")
-        }
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
-        window = glfwCreateWindow(mainWindow.width, mainWindow.height, "Snake Bizzare Adventure", mainWindow.monitor, 0)
-        glfwShowWindow(window)
-        glfwMakeContextCurrent(window)
-        input = Input(window)
-        GL.createCapabilities()
-        glEnable(GL_TEXTURE_2D)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glDisable(GL_DEPTH_TEST)
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
-        Land1.setTile(TileList.grass0.id,0,0)
-        initialize()
-        shader.bind()
-        while (!glfwWindowShouldClose(window)) {
-            Statistics.readFrameRate()
-            glClearColor(red+0.8f, 0.8f, 0.6f, 1f)
-            glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-            getInput(window)
-            input.update()
-            mainLoop()
-            firstRenderLoop()
-            secondRenderLoop()
-            thirdRenderLoop()
-            glfwSwapBuffers(window)
-        }
-        World.saveWays()
-        player.save()
-        Land1.saveWorld()
-        Land2.saveWorld()
+    if (!glfwInit()) {
+        throw Exception("GLFW_INIT_ERROR")
     }
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+    mainWindow.window = glfwCreateWindow(mainWindow.width, mainWindow.height, "Kotline Miami", mainWindow.monitor, 0)
+    glfwShowWindow(mainWindow.window)
+    glfwMakeContextCurrent(mainWindow.window)
+    input = Input(mainWindow.window)
+    GL.createCapabilities()
+    glEnable(GL_TEXTURE_2D)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glDisable(GL_DEPTH_TEST)
+    glfwSetInputMode(mainWindow.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
+    Land1.setTile(TileList.grass0.id, 0, 0)
+    initialize()
+    shader.bind()
+    while (!glfwWindowShouldClose(mainWindow.window)) {
+        Statistics.readFrameRate()
+        glClearColor(red + 0.8f, 0.8f, 0.6f, 1f)
+        glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+        getInput(mainWindow.window)
+        input.update()
+        mainLoop()
+        firstRenderLoop()
+        secondRenderLoop()
+        thirdRenderLoop()
+        glfwSwapBuffers(mainWindow.window)
+    }
+    World.saveWays()
+    player.save()
+    Land1.saveWorld()
+    Land2.saveWorld()
 }

@@ -37,11 +37,6 @@ class EntityModel(vertices: FloatArray, texCoords: FloatArray, indices:IntArray)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0)
         glBindBuffer(GL_ARRAY_BUFFER, 0)
     }
-    protected fun finalize() {
-        GL15.glDeleteBuffers(tID!!)
-        GL15.glDeleteBuffers(vID!!)
-        GL15.glDeleteBuffers(iID!!)
-    }
     fun renderIt() {
         glEnableVertexAttribArray(0)
         glEnableVertexAttribArray(1)
