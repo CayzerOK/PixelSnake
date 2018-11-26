@@ -1,11 +1,12 @@
 package com.cayzerok.core
 
+import com.cayzerok.entity.BulletNote
+import com.cayzerok.entity.bulletList
 import com.cayzerok.render.player
-import com.cayzerok.render.playerAngle
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import com.cayzerok.world.tiles
-import kotlinx.coroutines.channels.Channel
+import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFWScrollCallback
@@ -16,7 +17,6 @@ import org.lwjgl.glfw.GLFW.glfwSetScrollCallback
 
 val xBuffer = BufferUtils.createDoubleBuffer(1)
 val yBuffer = BufferUtils.createDoubleBuffer(1)
-val shoot = Channel<Boolean>()
 private var layer:Int = 0
 
 fun getInput(window:Long) {
@@ -61,28 +61,24 @@ fun getInput(window:Long) {
             player.invTileAngle = 0.0
         } else player.invTileAngle += 90.0
     }
+
+    if( input.isKeyPressed(GLFW_KEY_SPACE)) {
+        bulletList.add(BulletNote(Vector3f(player.position), Math.atan2((-cursorPos.y-player.position.y).toDouble(), (-cursorPos.x-player.position.x).toDouble()).toFloat()))}
+
+
     if( input.isKeyPressed(GLFW_KEY_ESCAPE)) {glfwSetWindowShouldClose(window,true)}
     if( input.isKeyDown(GLFW_KEY_W)) {
         player.move(0f,-15f,0f)
-        playerAngle = 0f }
+    }
     if( input.isKeyDown(GLFW_KEY_A)) {
         player.move(15f,0f,0f)
-        playerAngle = Math.toRadians(90.0).toFloat() }
+    }
     if( input.isKeyDown(GLFW_KEY_S)) {
         player.move(0f,15f,0f)
-        playerAngle=Math.toRadians(180.0).toFloat() }
+    }
     if( input.isKeyDown(GLFW_KEY_D)) {
         player.move(-15f,0f,0f)
-        playerAngle = Math.toRadians(270.0).toFloat() }
-
-    when{
-        input.isKeyDown(GLFW_KEY_W)&& input.isKeyDown(GLFW_KEY_A) -> playerAngle = Math.toRadians(45.0).toFloat()
-        input.isKeyDown(GLFW_KEY_A)&& input.isKeyDown(GLFW_KEY_S) -> playerAngle = Math.toRadians(135.0).toFloat()
-        input.isKeyDown(GLFW_KEY_S)&& input.isKeyDown(GLFW_KEY_D) -> playerAngle = Math.toRadians(225.0).toFloat()
-        input.isKeyDown(GLFW_KEY_D)&& input.isKeyDown(GLFW_KEY_W) -> playerAngle = Math.toRadians(315.0).toFloat()
     }
-
-
 
     if (!showWays) {
         when {

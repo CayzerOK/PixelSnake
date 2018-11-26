@@ -14,10 +14,10 @@ data class BulletNote(
         val angle:Float
 )
 
-val BulletList = mutableListOf<BulletNote>()
+var bulletList = mutableListOf<BulletNote>()
 
-object Bullet{
-    val tex = Texture("waypoint")
+object Bullet {
+    val tex = Texture("bullet")
     val vertices = floatArrayOf(
             -1f, 1f, 0f, // TOP LEFT 0
             1f, 1f, 0f, // TOP RIGHT 1
@@ -36,22 +36,31 @@ object Bullet{
     val model = EntityModel(vertices,texture,indices)
 
 
-    fun renderIt(bullet:Vector3f, angle: Float, index:Int) {
-        val y = 100*sin(angle)
-        val x = 100*cos(angle)
+    var bulletBuffer = mutableListOf<BulletNote>()
 
-        bullet.add(stabileFloat(x), stabileFloat(y), stabileFloat(0f))
+    fun renderIt(bullet:BulletNote) {
+        val y = 300 * sin(bullet.angle)
+        val x = 300 * cos(bullet.angle)
+
+        bullet.coords.add(stabileFloat(x), stabileFloat(y), stabileFloat(0f))
         try {
-            if (World.getWay((-bullet.x/ World.scale/2+0.5f).toInt(),(bullet.y/ World.scale/2+0.5f).toInt())!!)
-                bullet.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(0f))
-        } catch (e:Throwable) {}
+            when {
+                World.getWay((-bullet.coords.x / World.scale / 2 + 0.5f).toInt(),
+                        (bullet.coords.y / World.scale / 2 + 0.5f).toInt())!! -> {}
+                bullet.coords.x < mainCamera.camPosition.x-mainWindow.width/2 -> {}
+                bullet.coords.y < mainCamera.camPosition.y-mainWindow.height/2 -> {}
+                bullet.coords.x > mainCamera.camPosition.x+mainWindow.width/2 -> {}
+                bullet.coords.y > mainCamera.camPosition.y+mainWindow.height/2 -> {}
+                else -> bulletBuffer.add(bullet)
+            }
+        } catch (e:ArrayIndexOutOfBoundsException) {}
 
-        val bulletPos = Matrix4f().translate(Vector3f(-bullet.x/ World.scale, -bullet.y/ World.scale, 0f))
+        val bulletPos = Matrix4f().translate(Vector3f(-bullet.coords.x / World.scale, -bullet.coords.y / World.scale, 0f))
         val target = Matrix4f()
         mainCamera.getProjection().mul(World.projection, target)
-        target.mul(bulletPos).scale(1f)
+        target.mul(bulletPos).scale(0.5f).rotate(bullet.angle+Math.toRadians(180.0).toFloat(), 0f, 0f, 1f)
         shader.setUniform("sampler", 0f)
-        shader.setUniform("projection",angle)
+        shader.setUniform("projection", target)
         tex.bind(0)
         model.renderIt()
     }

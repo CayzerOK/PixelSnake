@@ -10,9 +10,11 @@ import com.cayzerok.world.World
 
 
 class Player {
+    var invGun = 0
     var invTile = 1
     var invTileAngle = 0.0
     val playerTex = Texture("player")
+    var angle = 0f
     val vertices = floatArrayOf(
             -1f, 1f, 0f, // TOP LEFT 0
             1f, 1f, 0f, // TOP RIGHT 1
@@ -51,7 +53,7 @@ class Player {
     }
 
     fun renderIt() {
-
+        angle = (Math.atan2((-cursorPos.y-player.position.y).toDouble(), (-cursorPos.x-player.position.x).toDouble())+Math.toRadians(90.0)).toFloat()
         val playerPos = Matrix4f().translate(Vector3f(-position.x/World.scale, -position.y/World.scale, 0f))
         val target = Matrix4f()
 

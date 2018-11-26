@@ -1,5 +1,6 @@
 package com.cayzerok.core
 
+import com.cayzerok.guns.Gun
 import com.cayzerok.render.Camera
 import com.cayzerok.render.player
 import com.cayzerok.world.*
@@ -11,7 +12,7 @@ val mainCamera = Camera(mainWindow.width,mainWindow.height)
 var input = Input(0)
 var cursorPos = Vector3f()
 var showWays = false
-var bullets = 0
+//val gun = Gun("minigun")
 
 fun initialize() {
     World.loadWays()

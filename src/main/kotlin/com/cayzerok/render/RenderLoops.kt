@@ -1,7 +1,9 @@
 package com.cayzerok.render
 
 import com.cayzerok.core.*
+import com.cayzerok.entity.Bullet
 import com.cayzerok.entity.Player
+import com.cayzerok.entity.bulletList
 import com.cayzerok.world.*
 
 val render = TileRenderer()
@@ -27,6 +29,15 @@ fun firstRenderLoop() {
 }
 
 fun secondRenderLoop() {
+
+    //gun.renderIt()
+
+    bulletList.forEach {it ->
+        Bullet.renderIt(it)
+    }
+    bulletList = Bullet.bulletBuffer
+    Bullet.bulletBuffer = mutableListOf()
+
     player.renderIt()
     render.renderTile(TileList.aim.id,
             cursorPos.x/(World.scale*2),
@@ -37,8 +48,4 @@ fun thirdRenderLoop() {
     render.renderTile(player.invTile,
             cursorPos.x/(World.scale*2)+0.2f,
             cursorPos.y/(World.scale*2)+0.2f, 0.3f, player.invTileAngle)
-
-
-
-
 }
