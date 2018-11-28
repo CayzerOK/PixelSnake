@@ -59,4 +59,21 @@ class TileRenderer {
                 tileModel.renderIt()
             }
     }
+
+    fun renderBar(barTex:Texture, x: Float, y: Float, size:Float = 1f, angle:Double = 0.0) {
+        if (x in (-mainCamera.camPosition.x / (World.scale*2)) - 5..(-mainCamera.camPosition.x / (World.scale*2)) + 5)
+            if (y in (-mainCamera.camPosition.y / (World.scale*2)) - 3..(-mainCamera.camPosition.y / (World.scale*2)) + 3) {
+
+                val tilePos = Matrix4f().translate(Vector3f((x * 2), (y * 2), 0f))
+                val target = Matrix4f()
+
+                mainCamera.getProjection().mul(World.projection, target)
+                target.mul(tilePos).scale(size).rotate(Math.toRadians(angle).toFloat(),0f,0f,1f)
+
+                shader.setUniform("sampler", 0f)
+                shader.setUniform("projection", target)
+                barTex.bind(0)
+                tileModel.renderIt()
+            }
+    }
 }

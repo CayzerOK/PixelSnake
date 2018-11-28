@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.lwjgl:lwjgl-vma:3.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-vma/3.2.0/c5572eddf2f07bd334e2f45830990529b7a7ecfb/lwjgl-vma-3.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-vma/3.2.0/42b53c54d8ab13da0161ee059ebadbf1088db9e9/lwjgl-vma-3.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -3,11 +3,14 @@ package com.cayzerok.render
 import com.cayzerok.core.*
 import com.cayzerok.entity.Bullet
 import com.cayzerok.entity.Player
-import com.cayzerok.entity.bulletList
+import com.cayzerok.guns.Gun
+import com.cayzerok.guns.reloadBar
+import com.cayzerok.guns.reloadTimer
 import com.cayzerok.world.*
 
 val render = TileRenderer()
-val player = Player()
+val player = Player("player")
+val enemy = Player("enemy")
 
 fun firstRenderLoop() {
     for (y in 0 until World.height) {
@@ -29,16 +32,14 @@ fun firstRenderLoop() {
 }
 
 fun secondRenderLoop() {
+    enemy.renderIt()
 
-    //gun.renderIt()
-
-    bulletList.forEach {it ->
-        Bullet.renderIt(it)
+    player.BulletArray.forEach {
+        if (it.avalible == false)
+            it.avalible = Bullet.renderIt(it)
     }
-    bulletList = Bullet.bulletBuffer
-    Bullet.bulletBuffer = mutableListOf()
-
     player.renderIt()
+    Gun.renderIt()
     render.renderTile(TileList.aim.id,
             cursorPos.x/(World.scale*2),
             cursorPos.y/(World.scale*2), 0.3f)

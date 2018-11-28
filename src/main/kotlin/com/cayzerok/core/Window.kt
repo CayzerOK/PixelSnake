@@ -1,5 +1,7 @@
 package com.cayzerok.core
 
+import com.cayzerok.guns.reload
+import com.cayzerok.guns.reloadGun
 import com.cayzerok.ui.*
 import com.cayzerok.render.*
 import com.cayzerok.world.*
@@ -46,6 +48,7 @@ fun coreStart() {
         firstRenderLoop()
         secondRenderLoop()
         thirdRenderLoop()
+        reloadGun()
         glfwSwapBuffers(mainWindow.window)
     }
     World.saveWays()

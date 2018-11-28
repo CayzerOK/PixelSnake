@@ -1,7 +1,9 @@
 package com.cayzerok.core
 
-import com.cayzerok.entity.BulletNote
-import com.cayzerok.entity.bulletList
+import com.cayzerok.guns.cells
+import com.cayzerok.guns.mustShoot
+import com.cayzerok.guns.reload
+import com.cayzerok.guns.shoot
 import com.cayzerok.render.player
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
@@ -11,10 +13,9 @@ import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFWScrollCallback
 import org.lwjgl.glfw.GLFW.glfwSetScrollCallback
+import kotlin.random.Random
 
-
-
-
+val random = Random(10)
 val xBuffer = BufferUtils.createDoubleBuffer(1)
 val yBuffer = BufferUtils.createDoubleBuffer(1)
 private var layer:Int = 0
@@ -62,22 +63,28 @@ fun getInput(window:Long) {
         } else player.invTileAngle += 90.0
     }
 
-    if( input.isKeyPressed(GLFW_KEY_SPACE)) {
-        bulletList.add(BulletNote(Vector3f(player.position), Math.atan2((-cursorPos.y-player.position.y).toDouble(), (-cursorPos.x-player.position.x).toDouble()).toFloat()))}
-
+    if( input.isMouseButtonPressed(0)) {
+        mustShoot = true
+    }
+    if( input.isMouseButtonReleased(0)) {
+        mustShoot = false
+    }
+    if( input.isKeyPressed(GLFW_KEY_R) && cells <30) {
+        reload = true
+    }
 
     if( input.isKeyPressed(GLFW_KEY_ESCAPE)) {glfwSetWindowShouldClose(window,true)}
     if( input.isKeyDown(GLFW_KEY_W)) {
-        player.move(0f,-15f,0f)
+        player.move(0f,-25f,0f)
     }
     if( input.isKeyDown(GLFW_KEY_A)) {
-        player.move(15f,0f,0f)
+        player.move(25f,0f,0f)
     }
     if( input.isKeyDown(GLFW_KEY_S)) {
-        player.move(0f,15f,0f)
+        player.move(0f,25f,0f)
     }
     if( input.isKeyDown(GLFW_KEY_D)) {
-        player.move(-15f,0f,0f)
+        player.move(-25f,0f,0f)
     }
 
     if (!showWays) {
@@ -86,7 +93,7 @@ fun getInput(window:Long) {
             input.isKeyPressed(GLFW_KEY_DOWN) -> if (layer - 1 in 0..layerList.lastIndex) layer -= 1
         }
 
-        if (input.isMouseButtonDown(0)) {
+        if (input.isKeyDown(GLFW_KEY_SPACE)) {
             layerList[layer].setTile(player.invTile, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt(), player.invTileAngle)
         }
         if (input.isMouseButtonDown(1)) {

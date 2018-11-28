@@ -4,7 +4,7 @@ import java.lang.IllegalStateException
 
 val tiles = Array<Tile?>(255, {null})
 
-class Tile(var id:Int, var texture:String, val solid:Boolean = false) {
+class Tile(var id:Int, var texture:String) {
     init {
         if (tiles[id] != null) {
             throw IllegalStateException("Tile id [$id] is already used.")
@@ -16,7 +16,7 @@ class Tile(var id:Int, var texture:String, val solid:Boolean = false) {
 
 
 object TileList{
-    val stone0 = Tile(1,"stone0",true)
+    val stone0 = Tile(1,"stone0")
     val stone1 = Tile(2,"stone1")
     val stone2 = Tile(3,"stone2")
     val stone3 = Tile(4,"stone3")
@@ -31,6 +31,10 @@ object TileList{
     val waterTile = Tile(13, "water")
     val aim = Tile(14, "aim")
     val waypoint = Tile(15,"waypoint")
+    val intWall0 = Tile(16, "interior_wall")
+    val intWall1 = Tile(17, "interior_wall1")
+    val intWall2 = Tile(18, "interior_wall2")
+    val intWall3 = Tile(19, "interior_wall3")
 }
 
 
