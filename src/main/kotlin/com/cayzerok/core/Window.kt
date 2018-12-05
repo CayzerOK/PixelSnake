@@ -1,6 +1,5 @@
 package com.cayzerok.core
 
-import com.cayzerok.guns.reload
 import com.cayzerok.guns.reloadGun
 import com.cayzerok.ui.*
 import com.cayzerok.render.*
@@ -12,9 +11,9 @@ import org.lwjgl.opengl.GL11.*
 object mainWindow {
     var window:Long = 0
     var isFullSchreen = false
-    val monitor:Long = if (isFullSchreen) {glfwGetPrimaryMonitor()} else {0}
-    val width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {1280}
-    val height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {720}
+    var monitor:Long = if (isFullSchreen) {glfwGetPrimaryMonitor()} else {0}
+    var width = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.width()} else {1280}
+    var height = if (isFullSchreen){glfwGetVideoMode(glfwGetPrimaryMonitor())!!.height()} else {720}
 }
 
 var red = 0f
@@ -35,7 +34,7 @@ fun coreStart() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glDisable(GL_DEPTH_TEST)
     glfwSetInputMode(mainWindow.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
-    Land1.setTile(TileList.grass0.id, 0, 0)
+    layerList[0].setTile(TileList.grass0.id, 0, 0)
     initialize()
     shader.bind()
     while (!glfwWindowShouldClose(mainWindow.window)) {
@@ -53,6 +52,5 @@ fun coreStart() {
     }
     World.saveWays()
     player.save()
-    Land1.saveWorld()
-    Land2.saveWorld()
+    layerList.forEach { it.saveWorld() }
 }

@@ -60,7 +60,7 @@ class TileRenderer {
             }
     }
 
-    fun renderBar(barTex:Texture, x: Float, y: Float, size:Float = 1f, angle:Double = 0.0) {
+    fun renderTile(barTex:Texture, x: Float, y: Float, size:Float = 1f, angle:Double = 0.0) {
         if (x in (-mainCamera.camPosition.x / (World.scale*2)) - 5..(-mainCamera.camPosition.x / (World.scale*2)) + 5)
             if (y in (-mainCamera.camPosition.y / (World.scale*2)) - 3..(-mainCamera.camPosition.y / (World.scale*2)) + 3) {
 

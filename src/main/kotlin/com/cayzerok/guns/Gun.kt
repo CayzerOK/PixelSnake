@@ -91,7 +91,7 @@ fun reloadGun() {
             cells = 30
             reload = false
             reloadTimer.`break`()
-        } else render.renderBar(reloadBar.getTex(reloadTimer.points)!!,
+        } else render.renderTile(reloadBar.getTex(reloadTimer.points)!!,
                 cursorPos.x/(World.scale*2),
                 cursorPos.y/(World.scale*2), 0.3f)
     }

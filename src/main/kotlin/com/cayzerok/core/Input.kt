@@ -3,12 +3,10 @@ package com.cayzerok.core
 import com.cayzerok.guns.cells
 import com.cayzerok.guns.mustShoot
 import com.cayzerok.guns.reload
-import com.cayzerok.guns.shoot
 import com.cayzerok.render.player
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import com.cayzerok.world.tiles
-import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFWScrollCallback
@@ -18,7 +16,7 @@ import kotlin.random.Random
 val random = Random(10)
 val xBuffer = BufferUtils.createDoubleBuffer(1)
 val yBuffer = BufferUtils.createDoubleBuffer(1)
-private var layer:Int = 0
+var invLayer:Int = 0
 
 fun getInput(window:Long) {
 
@@ -89,15 +87,15 @@ fun getInput(window:Long) {
 
     if (!showWays) {
         when {
-            input.isKeyPressed(GLFW_KEY_UP) -> if (layer + 1 in 0..layerList.lastIndex) layer += 1
-            input.isKeyPressed(GLFW_KEY_DOWN) -> if (layer - 1 in 0..layerList.lastIndex) layer -= 1
+            input.isKeyPressed(GLFW_KEY_UP) -> if (invLayer + 1 in 0..layerList.lastIndex) invLayer += 1
+            input.isKeyPressed(GLFW_KEY_DOWN) -> if (invLayer - 1 in 0..layerList.lastIndex) invLayer -= 1
         }
 
         if (input.isKeyDown(GLFW_KEY_SPACE)) {
-            layerList[layer].setTile(player.invTile, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt(), player.invTileAngle)
+            layerList[invLayer].setTile(player.invTile, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt(), player.invTileAngle)
         }
         if (input.isMouseButtonDown(1)) {
-            layerList[layer].setTile(null, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt())
+            layerList[invLayer].setTile(0, (cursorPos.x / (World.scale*2) + 0.5).toInt(), (-cursorPos.y / (World.scale*2) + 0.5).toInt())
         }
         if (input.scroll != 0.0) {
             if (tiles[player.invTile + input.scroll.toInt()] != null)

@@ -6,6 +6,7 @@ import com.cayzerok.entity.Player
 import com.cayzerok.guns.Gun
 import com.cayzerok.guns.reloadBar
 import com.cayzerok.guns.reloadTimer
+import com.cayzerok.lightning.Light
 import com.cayzerok.world.*
 
 val render = TileRenderer()
@@ -18,8 +19,7 @@ fun firstRenderLoop() {
             render.renderTile(TileList.waterTile.id, x.toFloat(), -y.toFloat())
         }
     }
-    Land1.renderIt()
-    Land2.renderIt()
+    layerList.forEach { it.renderIt() }
     if(showWays) {
         for (y in 0 until World.height) {
             for (x in 0 until World.width) {
@@ -40,12 +40,24 @@ fun secondRenderLoop() {
     }
     player.renderIt()
     Gun.renderIt()
+
+    for (ind in 0..invLayer) {
+        render.renderTile(TileList.waypoint.id,
+                -mainCamera.camPosition.x/(World.scale*2)+200/World.scale/2+ind/World.scale,
+                -mainCamera.camPosition.y/(World.scale*2)-200/World.scale/2+ind/World.scale,
+                0.3f)
+    }
+
     render.renderTile(TileList.aim.id,
             cursorPos.x/(World.scale*2),
             cursorPos.y/(World.scale*2), 0.3f)
 }
 
 fun thirdRenderLoop() {
+
+    //Light.renderLight(Texture("light"), 10f,-10f,2f)
+
+
     render.renderTile(player.invTile,
             cursorPos.x/(World.scale*2)+0.2f,
             cursorPos.y/(World.scale*2)+0.2f, 0.3f, player.invTileAngle)

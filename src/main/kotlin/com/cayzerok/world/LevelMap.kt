@@ -8,17 +8,20 @@ import org.joml.Vector3f
 import java.io.File
 import java.io.FileNotFoundException
 
-val Land1 = Layer("main1")
-val Land2 = Layer("main2")
 val gson = Gson()
-val layerList = listOf(Land1, Land2)
+val layerList = listOf(
+        Layer("main1"),
+        Layer("main2"),
+        Layer("main3"),
+        Layer("main4")
+)
 
 object World{
-    val width = 64
-    val height = 64
-    var scale = 71f
-    var projection = Matrix4f().setTranslation(Vector3f(0f)).scale(World.scale)
-    var wayMap:Array<Boolean?> =  Array(World.width*World.height,{false})
+    const val width = 64
+    const val height = 64
+    var scale = mainWindow.height/10.toFloat()
+    var projection = Matrix4f().setTranslation(Vector3f(0f)).scale(World.scale)!!
+    var wayMap:Array<Boolean?> =  Array(World.width*World.height) {false}
 
     fun loadWays() {
         try {
@@ -64,29 +67,39 @@ object World{
     }
 }
 
-class Layer(val name:String){
+class Layer(private val name:String){
 
-    private var sheet:Array<Int?> = Array(World.width*World.height,{null})
-    private var angleSheet:Array<Double?> =  Array(World.width*World.height,{0.0})
+    private var sheet:Array<Int> = Array(World.width*World.height) {0}
+    private var angleSheet:Array<Double?> =  Array(World.width*World.height) {0.0}
 
     fun renderIt() {
         for (y in 0 until World.height)
             for (x in 0 until World.width) {
-                if (sheet[x+y*World.width] != null) {
-                    render.renderTile(sheet[x+y*World.width]!!,x.toFloat(),-y.toFloat(), angle = angleSheet[x+y*World.width]!!)
+                if (sheet[x+y*World.width] != 0) {
+                    render.renderTile(sheet[x + y * World.width],x.toFloat(),-y.toFloat(), angle = angleSheet[x+y*World.width]!!)
                 }
             }
     }
 
-    fun setTile(tile: Int?, x:Int, y:Int, angle:Double = 0.0) {
+    fun setTile(tile: Int, x:Int, y:Int, angle:Double = 0.0) {
         sheet[x+y*World.width] = tile
         angleSheet[x+y*World.width] = angle
     }
 
+    fun getAngle(x:Int,y:Int): Double? {
+        return try {
+            angleSheet[x+y*World.width]
+        } catch (e:ArrayIndexOutOfBoundsException) {
+            null
+        }
+    }
+
     fun getTile(x:Int,y:Int): Tile? {
-        try {
-            return tiles[sheet[x+y*World.width]!!]
-        } catch (e:ArrayIndexOutOfBoundsException) {return null}
+        return try {
+            tiles[sheet[x+y*World.width]]
+        } catch (e:ArrayIndexOutOfBoundsException) {
+            null
+        }
     }
 
 
@@ -94,7 +107,7 @@ class Layer(val name:String){
 
     fun loadWorld() {
         try {
-            sheet = gson.fromJson(File(path + "levels/" + name + ".lvl").readText(), Array<Int?>::class.java)
+            sheet = gson.fromJson(File(path+"levels/"+name+".lvl").readText(), Array<Int>::class.java)
             angleSheet = gson.fromJson(File(path+"levels/"+name+".ang").readText(),Array<Double?>::class.java)
         } catch (e:FileNotFoundException){}
 

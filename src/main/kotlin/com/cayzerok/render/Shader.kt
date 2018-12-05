@@ -77,8 +77,8 @@ class Shader(fileName: String){
     private fun readFile(fileName:String) :String {
         val stringBuilder = StringBuilder()
         try {
-            val bufferReader:BufferedReader = BufferedReader(FileReader(File(path+"shaders/"+fileName)))
-            var hasLine:Boolean = true
+            val bufferReader = BufferedReader(FileReader(File(path+"shaders/"+fileName)))
+            var hasLine = true
             var line:String?
             while (hasLine){
                 line = bufferReader.readLine()

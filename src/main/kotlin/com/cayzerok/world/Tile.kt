@@ -1,10 +1,11 @@
 package com.cayzerok.world
 
+import org.joml.Vector2f
 import java.lang.IllegalStateException
 
-val tiles = Array<Tile?>(255, {null})
+val tiles = Array<Tile?>(255) {null}
 
-class Tile(var id:Int, var texture:String) {
+class Tile(var id:Int, var texture:String,val center:Vector2f? = null, val hExtend:Vector2f? = null) {
     init {
         if (tiles[id] != null) {
             throw IllegalStateException("Tile id [$id] is already used.")
@@ -31,11 +32,7 @@ object TileList{
     val waterTile = Tile(13, "water")
     val aim = Tile(14, "aim")
     val waypoint = Tile(15,"waypoint")
-    val intWall0 = Tile(16, "interior_wall")
-    val intWall1 = Tile(17, "interior_wall1")
-    val intWall2 = Tile(18, "interior_wall2")
-    val intWall3 = Tile(19, "interior_wall3")
+    val intWall0 = Tile(16, "interior_wall", Vector2f(1.6f,0f), Vector2f(World.scale/5,World.scale))
+    val intWall1 = Tile(17, "interior_wall1", Vector2f(1.6f, 1.6f), Vector2f(World.scale/5,World.scale/5))
 }
-
-
 
