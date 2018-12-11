@@ -1,9 +1,6 @@
 package com.cayzerok.guns
 
-import com.cayzerok.core.cursorPos
-import com.cayzerok.core.mainCamera
-import com.cayzerok.core.random
-import com.cayzerok.experemental.shader
+import com.cayzerok.core.*
 import com.cayzerok.render.*
 import com.cayzerok.ui.Timer
 import com.cayzerok.world.World

@@ -1,13 +1,14 @@
 package com.cayzerok.render
 
 import com.cayzerok.core.path
-import org.lwjgl.opengl.GL13.*
 import de.matthiasmann.twl.utils.PNGDecoder
-import java.io.IOException
-import org.lwjgl.opengl.GL11
 import org.lwjgl.BufferUtils
-import java.io.FileInputStream
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL13.GL_TEXTURE0
+import org.lwjgl.opengl.GL13.glActiveTexture
 import java.io.BufferedInputStream
+import java.io.FileInputStream
+import java.io.IOException
 
 class Texture(asset:String) {
     val id = GL11.glGenTextures()

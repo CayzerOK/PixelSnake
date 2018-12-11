@@ -1,6 +1,5 @@
 package com.cayzerok.core
 
-import com.cayzerok.experemental.mainWindow
 import com.cayzerok.guns.cells
 import com.cayzerok.guns.mustShoot
 import com.cayzerok.guns.reload

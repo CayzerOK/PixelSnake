@@ -1,6 +1,5 @@
 package com.cayzerok.render
 
-import com.cayzerok.core.cursorPos
 import org.joml.Matrix4f
 
 class Transform {

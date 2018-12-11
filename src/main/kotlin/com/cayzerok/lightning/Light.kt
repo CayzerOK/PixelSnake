@@ -1,7 +1,7 @@
 package com.cayzerok.lightning
 
 import com.cayzerok.core.mainCamera
-import com.cayzerok.experemental.shader
+import com.cayzerok.core.shader
 import com.cayzerok.render.EntityModel
 import com.cayzerok.render.Texture
 import com.cayzerok.world.World

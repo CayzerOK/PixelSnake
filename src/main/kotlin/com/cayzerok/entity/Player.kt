@@ -3,7 +3,7 @@ package com.cayzerok.entity
 import com.cayzerok.AABB.AABB
 import com.cayzerok.AABB.getBBoxes
 import com.cayzerok.core.mainCamera
-import com.cayzerok.experemental.shader
+import com.cayzerok.core.shader
 import com.cayzerok.core.stableFloat
 import com.cayzerok.render.*
 import com.cayzerok.world.World

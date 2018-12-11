@@ -1,11 +1,11 @@
 package com.cayzerok.render
 
+import com.cayzerok.entity.Bullet
+import com.cayzerok.entity.Player
 import com.cayzerok.core.cursorPos
 import com.cayzerok.core.invLayer
 import com.cayzerok.core.mainCamera
 import com.cayzerok.core.showWays
-import com.cayzerok.entity.Bullet
-import com.cayzerok.entity.Player
 import com.cayzerok.guns.Gun
 import com.cayzerok.world.TileList
 import com.cayzerok.world.TileRenderer

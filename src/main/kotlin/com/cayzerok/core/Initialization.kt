@@ -1,6 +1,5 @@
 package com.cayzerok.core
 
-import com.cayzerok.experemental.mainWindow
 import com.cayzerok.render.Camera
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
@@ -13,6 +12,6 @@ var showWays = false
 
 fun initialize() {
     World.loadWays()
-    com.cayzerok.experemental.shader.init()
+    com.cayzerok.core.shader.init()
     layerList.forEach { it.loadWorld() }
 }

@@ -1,6 +1,6 @@
 package com.cayzerok.render
 
-import com.cayzerok.core.*
+import com.cayzerok.core.stableFloat
 import org.joml.Matrix4f
 import org.joml.Vector3f
 class Camera(width:Int,height:Int) {
