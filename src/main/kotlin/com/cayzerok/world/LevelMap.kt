@@ -1,6 +1,7 @@
 package com.cayzerok.world
 
 import com.cayzerok.core.*
+import com.cayzerok.experemental.mainWindow
 import com.cayzerok.render.*
 import com.google.gson.Gson
 import org.joml.Matrix4f
@@ -52,8 +53,8 @@ object World{
 
         if(mainCamera.camPosition.y < mainWindow.height/2-World.scale)
             mainCamera.camPosition.y = mainWindow.height/2-World.scale
-        if(mainCamera.camPosition.y > h-mainWindow.height/2-World.scale)
-            mainCamera.camPosition.y = h-mainWindow.height/2-World.scale
+        if(mainCamera.camPosition.y > h- mainWindow.height/2-World.scale)
+            mainCamera.camPosition.y = h- mainWindow.height/2-World.scale
 
         if(player.position.x> World.scale+0.5f)
             player.position.x = World.scale+0.5f

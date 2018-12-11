@@ -1,13 +1,18 @@
 package com.cayzerok.core
 
+import com.cayzerok.experemental.PID
 import com.cayzerok.guns.shoot
 import com.cayzerok.render.player
-import com.cayzerok.render.render
-import com.cayzerok.world.TileList
 import com.cayzerok.world.World
 import org.joml.Vector3f
 
 fun mainLoop() {
+    if (player.moveKeys[0]) player.move(0f,-30f,0f)
+    if (player.moveKeys[1]) player.move(30f,0f,0f)
+
+    if (player.moveKeys[2]) player.move(0f,30f,0f)
+    if (player.moveKeys[3]) player.move(-30f,0f,0f)
+
     input.updateScroll()
     player.angle = (Math.atan2((-cursorPos.y- player.position.y).toDouble(),
             (-cursorPos.x-player.position.x).toDouble())+Math.toRadians(90.0)).toFloat()
@@ -16,7 +21,6 @@ fun mainLoop() {
     PID.smoothCam(camTarget)
     World.correctCamera()
     shoot()
-    render.renderTile(TileList.waypoint.id, -player.position.x/(World.scale*2), -player.position.y/(World.scale*2), 0.66f)
 }
 
 

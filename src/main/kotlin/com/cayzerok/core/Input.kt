@@ -1,5 +1,6 @@
 package com.cayzerok.core
 
+import com.cayzerok.experemental.mainWindow
 import com.cayzerok.guns.cells
 import com.cayzerok.guns.mustShoot
 import com.cayzerok.guns.reload
@@ -7,10 +8,9 @@ import com.cayzerok.render.player
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import com.cayzerok.world.tiles
-import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.BufferUtils
+import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWScrollCallback
-import org.lwjgl.glfw.GLFW.glfwSetScrollCallback
 import kotlin.random.Random
 
 val random = Random(10)
@@ -44,8 +44,8 @@ fun getInput(window:Long) {
         glfwSetCursorPos(window, cx.toDouble(), -cy.toDouble())
     }
 
-    cursorPos.x = (cx-mainCamera.camPosition.x-mainWindow.width/2)
-    cursorPos.y = (cy-mainCamera.camPosition.y+mainWindow.height/2)
+    cursorPos.x = (cx-mainCamera.camPosition.x- mainWindow.width/2)
+    cursorPos.y = (cy-mainCamera.camPosition.y+ mainWindow.height/2)
 
     if (input.isKeyDown(GLFW_KEY_LEFT_CONTROL)&&input.isKeyPressed(GLFW_KEY_R))
         showWays = !showWays
@@ -72,18 +72,19 @@ fun getInput(window:Long) {
     }
 
     if( input.isKeyPressed(GLFW_KEY_ESCAPE)) {glfwSetWindowShouldClose(window,true)}
-    if( input.isKeyDown(GLFW_KEY_W)) {
-        player.move(0f,-25f,0f)
-    }
-    if( input.isKeyDown(GLFW_KEY_A)) {
-        player.move(25f,0f,0f)
-    }
-    if( input.isKeyDown(GLFW_KEY_S)) {
-        player.move(0f,25f,0f)
-    }
-    if( input.isKeyDown(GLFW_KEY_D)) {
-        player.move(-25f,0f,0f)
-    }
+
+    if( input.isKeyPressed(GLFW_KEY_W)) { player.moveKeys[0] = true }
+    if( input.isKeyReleased(GLFW_KEY_W)) { player.moveKeys[0] = false }
+
+    if( input.isKeyPressed(GLFW_KEY_A)) { player.moveKeys[1] = true }
+    if( input.isKeyReleased(GLFW_KEY_A)) { player.moveKeys[1] = false}
+
+    if( input.isKeyPressed(GLFW_KEY_S)) { player.moveKeys[2] = true }
+    if( input.isKeyReleased(GLFW_KEY_S)) { player.moveKeys[2] = false }
+
+    if( input.isKeyPressed(GLFW_KEY_D)) { player.moveKeys[3] = true }
+    if( input.isKeyReleased(GLFW_KEY_D)) { player.moveKeys[3] = false }
+
 
     if (!showWays) {
         when {
@@ -113,8 +114,8 @@ fun getInput(window:Long) {
 }
 
 class Input(val window: Long) {
-    var keys = BooleanArray(GLFW_KEY_LAST,{false})
-    var mouse = BooleanArray(GLFW_MOUSE_BUTTON_LAST,{false})
+    var keys = BooleanArray(GLFW_KEY_LAST) {false}
+    var mouse = BooleanArray(GLFW_MOUSE_BUTTON_LAST) {false}
 
     var scroll = 0.0
 

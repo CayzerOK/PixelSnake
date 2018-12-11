@@ -1,7 +1,5 @@
 package com.cayzerok.AABB
 
-import com.cayzerok.render.render
-import com.cayzerok.world.TileList
 import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import org.joml.Vector2f
@@ -34,8 +32,6 @@ fun getBBoxes(position: Vector3f): Array<AABB?> {
                 val thisAngle = it.getAngle(x, y)
                 if (thisTile != null)
                     if (thisTile.hExtend != null) {
-                        render.renderTile(TileList.waypoint.id, x.toFloat(), -y.toFloat())
-
                         val center = Vector2f(-x * (World.scale * 2), y * (World.scale * 2))
                         val bCenter = Vector2f(rotateVec2f(thisTile.center!!, thisAngle!!)).mul(World.scale/2)
 

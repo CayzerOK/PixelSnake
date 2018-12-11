@@ -1,17 +1,21 @@
 package com.cayzerok.render
 
-import com.cayzerok.core.*
+import com.cayzerok.core.cursorPos
+import com.cayzerok.core.invLayer
+import com.cayzerok.core.mainCamera
+import com.cayzerok.core.showWays
 import com.cayzerok.entity.Bullet
 import com.cayzerok.entity.Player
 import com.cayzerok.guns.Gun
-import com.cayzerok.guns.reloadBar
-import com.cayzerok.guns.reloadTimer
-import com.cayzerok.lightning.Light
-import com.cayzerok.world.*
+import com.cayzerok.world.TileList
+import com.cayzerok.world.TileRenderer
+import com.cayzerok.world.World
+import com.cayzerok.world.layerList
 
 val render = TileRenderer()
+
+val enemyList = Array<Player>(7) {Player("enemy")}
 val player = Player("player")
-val enemy = Player("enemy")
 
 fun firstRenderLoop() {
     for (y in 0 until World.height) {
@@ -32,7 +36,7 @@ fun firstRenderLoop() {
 }
 
 fun secondRenderLoop() {
-    enemy.renderIt()
+    enemyList.forEach { it.renderIt() }
 
     player.BulletArray.forEach {
         if (it.avalible == false)

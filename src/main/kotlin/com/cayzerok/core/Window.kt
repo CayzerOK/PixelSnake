@@ -1,9 +1,15 @@
 package com.cayzerok.core
 
+import com.cayzerok.experemental.mainWindow
 import com.cayzerok.guns.reloadGun
-import com.cayzerok.ui.*
-import com.cayzerok.render.*
-import com.cayzerok.world.*
+import com.cayzerok.render.Shader
+import com.cayzerok.render.firstRenderLoop
+import com.cayzerok.render.secondRenderLoop
+import com.cayzerok.render.thirdRenderLoop
+import com.cayzerok.ui.Statistics
+import com.cayzerok.world.TileList
+import com.cayzerok.world.World
+import com.cayzerok.world.layerList
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
@@ -29,6 +35,7 @@ fun coreStart() {
     glfwMakeContextCurrent(mainWindow.window)
     input = Input(mainWindow.window)
     GL.createCapabilities()
+    glfwSwapInterval(0)
     glEnable(GL_TEXTURE_2D)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -36,14 +43,15 @@ fun coreStart() {
     glfwSetInputMode(mainWindow.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN)
     layerList[0].setTile(TileList.grass0.id, 0, 0)
     initialize()
-    shader.bind()
+    com.cayzerok.experemental.shader.bind()
     while (!glfwWindowShouldClose(mainWindow.window)) {
+        networkLoop()
         Statistics.readFrameRate()
-        glClearColor(red + 0.8f, 0.8f, 0.6f, 1f)
+        glClearColor(com.cayzerok.experemental.red + 0.8f, 0.8f, 0.6f, 1f)
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         getInput(mainWindow.window)
         input.update()
-        mainLoop()
+        com.cayzerok.experemental.mainLoop()
         firstRenderLoop()
         secondRenderLoop()
         thirdRenderLoop()
@@ -51,6 +59,5 @@ fun coreStart() {
         glfwSwapBuffers(mainWindow.window)
     }
     World.saveWays()
-    player.save()
     layerList.forEach { it.saveWorld() }
 }

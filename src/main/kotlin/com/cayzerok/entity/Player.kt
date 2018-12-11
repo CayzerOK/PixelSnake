@@ -1,16 +1,22 @@
 package com.cayzerok.entity
 
-import com.cayzerok.core.*
-import com.cayzerok.AABB.*
+import com.cayzerok.AABB.AABB
+import com.cayzerok.AABB.getBBoxes
+import com.cayzerok.core.mainCamera
+import com.cayzerok.experemental.shader
+import com.cayzerok.core.stableFloat
 import com.cayzerok.render.*
-import com.cayzerok.world.*
-import org.joml.Vector3f
-import org.joml.Matrix4f
-import java.io.File
 import com.cayzerok.world.World
+import org.joml.Matrix4f
 import org.joml.Vector2f
+import org.joml.Vector3f
+import java.util.*
 
 class Player(val name:String) {
+    var uuid: UUID? = null
+
+    var moveKeys = BooleanArray(4) {false}
+
     var HP = 100
     val hpBar = Bar(20,"hpbar")
 
@@ -41,36 +47,32 @@ class Player(val name:String) {
     var playerAABB = AABB(Vector2f(position.x,position.y), Vector2f(World.scale*2/3,World.scale*2/3))
     private val transform = Transform()
 
+    fun setPos(pos:Vector3f) {
+        position = pos
+        playerAABB.center = Vector2f(position.x,position.y)
+    }
 
     fun move(x: Float, y: Float, z: Float) {
 
-        position.add(stabileFloat(x), stabileFloat(y), stabileFloat(z))
+        position.add(stableFloat(x), stableFloat(y), stableFloat(z))
         val boxes = getBBoxes(position)
         playerAABB.center = Vector2f(position.x,position.y)
         try {
             boxes.forEach {
                 if (it != null)
                     if (playerAABB.isIntersecting(it)) {
-                        position.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(z))
+                        position.add(-stableFloat(x), -stableFloat(y), -stableFloat(z))
                         playerAABB.center = Vector2f(position.x, position.y)
                     }
             }
-
-            if (player.playerAABB.isIntersecting(enemy.playerAABB)) {
-//                println("AAA")
-                position.add(-stabileFloat(x), -stabileFloat(y), -stabileFloat(z))
-                playerAABB.center = Vector2f(position.x, position.y)
+            enemyList.forEach {
+                if (player.playerAABB.isIntersecting(it.playerAABB)) {
+                    position.add(-stableFloat(x), -stableFloat(y), -stableFloat(z))
+                    playerAABB.center = Vector2f(position.x, position.y)
+                }
             }
-        } catch (e: Throwable) { }
-    }
 
-    fun save() {
-        val posString = gson.toJson(position)
-        File(path + "levels/$name.lvl").writeText(posString)
-    }
-
-    fun load() {
-        position.set(gson.fromJson(File(path + "levels/$name.lvl").readText(), Vector3f::class.java))
+        } catch (e: Throwable) { println("AABB ERROR") }
     }
 
     fun renderIt() {

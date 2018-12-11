@@ -1,7 +1,7 @@
 package com.cayzerok.world
 
 import com.cayzerok.core.mainCamera
-import com.cayzerok.core.shader
+import com.cayzerok.experemental.shader
 import com.cayzerok.render.*
 import org.joml.Matrix4f
 import org.joml.Vector3f

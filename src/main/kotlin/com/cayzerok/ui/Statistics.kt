@@ -28,10 +28,10 @@ object Statistics {
 
 class Timer(val pointRate:Int) {
     var points = 0
-    var lastFrame: Float = 0.0f
-    var thisFrame: Float = 0.0f
-    var frameTime: Float = 0.0f
-    var milis: Float = 0.0f
+    var lastFrame: Float = 0f
+    var thisFrame: Float = 0f
+    var frameTime: Float = 0f
+    var milis: Float = 0f
     private var frames: Int = 0
     var frameRate: Int = 0
 
