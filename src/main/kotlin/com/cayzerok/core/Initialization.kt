@@ -5,13 +5,12 @@ import com.cayzerok.world.World
 import com.cayzerok.world.layerList
 import org.joml.Vector3f
 
-val mainCamera = Camera(mainWindow.width, mainWindow.height)
+val mainCamera = Camera(MainWindow.width, MainWindow.height)
 var input = Input(0)
 var cursorPos = Vector3f()
-var showWays = false
 
 fun initialize() {
-    World.loadWays()
-    com.cayzerok.core.shader.init()
+    shader.init()
     layerList.forEach { it.loadWorld() }
+    println(World.scale)
 }

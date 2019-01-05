@@ -3,12 +3,11 @@ package com.cayzerok.entity
 import com.cayzerok.AABB.AABB
 import com.cayzerok.AABB.getBBoxes
 import com.cayzerok.core.mainCamera
-import com.cayzerok.core.mainWindow
 import com.cayzerok.core.shader
 import com.cayzerok.core.stableFloat
 import com.cayzerok.render.EntityModel
 import com.cayzerok.render.Texture
-import com.cayzerok.render.enemyList
+import com.cayzerok.render.playerList
 import com.cayzerok.world.World
 import org.joml.Matrix4f
 import org.joml.Vector2f
@@ -57,22 +56,8 @@ object Bullet {
                         return true
                     }
             }
-
-            enemyList.forEach {
-                if (bAABB.isIntersecting(it.playerAABB)) {
-                it.HP-=10
-                if (it.HP<0) {
-                    it.position = Vector3f(-12200f,-100f,0f)
-                    it.playerAABB.center = Vector2f(-12200f,-100f)
-                }
-                return true
-            } }
-
-            when {
-                bullet.coords.x < mainCamera.camPosition.x- mainWindow.width/2 -> {return true}
-                bullet.coords.y < mainCamera.camPosition.y- mainWindow.height/2 -> {return true}
-                bullet.coords.x > mainCamera.camPosition.x+ mainWindow.width/2 -> {return true}
-                bullet.coords.y > mainCamera.camPosition.y+ mainWindow.height/2 -> {return true}
+            playerList.forEach {
+                if (bAABB.isIntersecting(it.playerAABB)) { return true }
             }
         } catch (e:ArrayIndexOutOfBoundsException) {}
 

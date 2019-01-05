@@ -4,7 +4,7 @@ import com.cayzerok.render.Shader
 import org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor
 import org.lwjgl.glfw.GLFW.glfwGetVideoMode
 
-object mainWindow {
+object MainWindow {
     var window:Long = 0
     var isFullSchreen = false
     var monitor:Long = if (isFullSchreen) {glfwGetPrimaryMonitor()} else {0}
@@ -14,8 +14,3 @@ object mainWindow {
 
 var red = 0f
 val shader = Shader("shader")
-
-fun coreStart() {
-
-
-}

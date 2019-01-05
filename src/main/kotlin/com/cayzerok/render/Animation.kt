@@ -12,8 +12,8 @@ class Animation(val amount:Int, name:String) {
     }
 
     fun getTex(): Texture? {
-        var texIndex = Statistics.milis/animFrameTime
-        if (texIndex>amount) texIndex = amount-1f
+        var texIndex = Statistics.millis/animFrameTime
+        if (texIndex>amount) texIndex = amount-1L
         return frames[texIndex.toInt()]
     }
 }
@@ -28,7 +28,8 @@ class Bar(val amount:Int, name:String, maxData: Int = 100) {
 
     fun getTex(data:Int): Texture? {
         var texIndex = data/frameInd
-        if (texIndex>amount) texIndex = amount-1
+        println("$data, $texIndex")
+        if (texIndex>amount-1) texIndex = amount-1
         return frames[texIndex]
     }
 }

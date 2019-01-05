@@ -22,4 +22,9 @@ object PID {
         val yP= ((target.y-mainCamera.camPosition.y)/10)*yS
         mainCamera.move(xP,yP,0f)
     }
+
+    fun smoothAngle(target:Float, current:Float): Float {
+        val result = ((target-current)/10)*60
+        return result
+    }
 }
